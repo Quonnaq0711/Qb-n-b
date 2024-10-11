@@ -7,4 +7,9 @@ import './signUpForm.css';
 
 const SignUpFormPage = () => {
     const dispatch = useDispatch('')
+
+
 }
+
+
+export default SignUpFormPage;
