@@ -44,3 +44,14 @@ button:hover {
     padding: 10px 15px;
     border-radius: 5px;
 }
+
+.nav-link {
+    display: inline-block;
+    background-color: #007bff; /* Button color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
