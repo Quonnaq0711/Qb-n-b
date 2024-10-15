@@ -1,5 +1,6 @@
 import { useRef, useState, useContext, createContext } from 'react';
 import ReactDOM from 'react-dom';
+//import { handleClose } from '../components/LoginFormModal';
 import './modal.css';
 
 const ModalContext = createContext();

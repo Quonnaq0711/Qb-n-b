@@ -1,57 +1,87 @@
-/* Navigation styles */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 15px; /* Space between items */
+  /* Nav.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:  indigo;
+  padding: 10px 20px;
+  color: white;
 }
 
-li {
-    display: inline;
+.logo img {
+  height: 40px; 
 }
 
-a {
-    text-decoration: none;
-    color: #007bff; /* Bootstrap primary color */
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-a:hover {
-    background-color: #f1f1f1; /* Light grey background on hover */
-    color: #0056b3; /* Darker blue on hover */
-}
-
-button {
-    background-color: #007bff; /* Button color */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-
-.profile-button {
-    /* Optional styles for ProfileButton if needed */
-    display: inline-block;
-    padding: 10px 15px;
-    border-radius: 5px;
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .nav-link {
-    display: inline-block;
-    background-color: #007bff; /* Button color */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  transition: background-color 0.3s;
 }
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu {
+  position: relative;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 10px;
+}
+
+.dropdown {
+  display: block; 
+  position: relative;
+  top: 100%; 
+  left: 0;
+  background-color: #153243;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px #153243;
+  z-index: 1000;
+}
+
+.dropdown li {
+  padding: 10px 15px;
+}
+
+.dropdown li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* media queries for screen resizing */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; 
+  }
+  
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .menu {
+    width: 100%;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+}
+
+  

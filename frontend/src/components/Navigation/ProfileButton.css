@@ -1,0 +1,48 @@
+/* ProfileButton.css */
+/* 
+.user-menu {
+    position: relative;
+  }
+  
+  .user-menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .profile-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0; 
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 10px;
+  }
+  
+  .profile-dropdown li {
+    margin: 5px 0;
+    color: #333; 
+  }
+  
+  .logout-button {
+    background-color: #d9534f; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .logout-button:hover {
+    background-color: #c9302c; 
+  }
+  
+  .hidden {
+    display: none;
+  }
+   */
