@@ -1,60 +1,76 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #b4b8ab;
+
+.modal-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-form {
-    background: #fff;
+    justify-content: center;
+    width: 400px; 
     padding: 20px;
+    background-color:#b4b8ab; 
     border-radius: 8px;
-    box-shadow: 0 0 10px black;
-    width: 300px;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-}
-
-label {
-    display: block;
-    margin-bottom: 10px;
-    color: #555;
-}
-
-button {
-    width: 100%;
+    box-shadow: 0 4px 10px #eef0eb;
+    position: relative;
+  }
+  
+  h1 {
+    margin-bottom: 20px; 
+    color: #333; 
+  }
+  
+  form {
+    width: 100%; 
+  }
+  
+  label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; 
+    font-size: 14px; 
+    color: black;
+    font-weight: 600; 
+  }
+  
+  input {
     padding: 10px;
-    background-color: #007BFF;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px;
+    font-size: 16px; /* Font size for inputs */
+    transition: border-color 0.3s;
+  }
+  
+  input:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    outline: none; /* Remove default outline */
+  }
+  
+  button {
+    padding: 10px;
+    background-color: indigo; /* Primary button color */
+    color: white;
     border: none;
     border-radius: 4px;
-    color: #eef0eb;
-    font-size: 16px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-p {
-    color: red;
-    font-size: 14px;
-    text-align: center;
-}
-
-form {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px black;
-    width: 300px;
-}
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width: 100%; /* Full width button */
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  p {
+    color: red; /* Error message color */
+    font-size: 14px; /* Font size for error messages */
+    margin-top: 10px; /* Space above error messages */
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 480px) {
+    .modal-container {
+      width: 90%; /* Full width on small screens */
+    }
+  }
 
 input[type="text"],
 input[type="firstname"],
@@ -62,9 +78,10 @@ input[type="lastname"],
 input[type="email"],
 input[type="username"],
 input[type="password"] {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px; 
+    font-size: 14px; 
+    color: black;
+    font-weight: 600; 
 }

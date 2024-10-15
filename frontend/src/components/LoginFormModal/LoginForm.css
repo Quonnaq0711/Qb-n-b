@@ -1,66 +1,90 @@
 /* LoginFormModal.css */
 
 .modal-container {
-    width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px; 
+  padding: 20px;
+  background-color:#b4b8ab; 
+  border-radius: 8px;
+  box-shadow: 0 4px 10px #eef0eb;
+  position: relative;
+}
+
+h1 {
+  margin-bottom: 20px; 
+  color: #333; 
+}
+
+form {
+  width: 100%; 
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px; 
+  font-size: 14px; 
+  color: black;
+  font-weight: 600; 
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px;
+  font-size: 16px; /* Font size for inputs */
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #007bff; /* Highlight border on focus */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  padding: 10px;
+  background-color: #4b0082; /* Primary button color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  width: 100%; /* Full width button */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+p {
+  color: red; /* Error message color */
+  font-size: 14px; /* Font size for error messages */
+  margin-top: 10px; /* Space above error messages */
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+  .modal-container {
+    width: 90%; /* Full width on small screens */
   }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333333;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    
-  }
-  
-  label {
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #555555;
-  }
-  
-  input {
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    color: #333333;
-  }
-  
-  input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  button {
-    padding: 10px;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  p {
-    color: #ff0000;
-    font-size: 14px;
-    margin: 0 0 15px;
-  }
-  
+}
+
+.demo-button {
+  margin-top: 10px; /* Space above the demo button */
+  padding: 10px;
+  background-color: #153243; /* A different color for distinction */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.demo-button:hover {
+  background-color: #ec971f; /* Darker shade on hover */
+}
