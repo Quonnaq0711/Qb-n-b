@@ -5,7 +5,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormPageModal';
-import './ProfileButton.css'; // Add your styles here
+ 
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logoutUser()).then(() => {
-      setShowMenu(false); // Close the menu after logging out
+      setShowMenu(false); 
     });
   };
 
