@@ -1,33 +1,43 @@
-// import { csrfFetch } from './csrf';
+import { createSelector } from "reselect";
+import { csrfFetch } from "./csrf";
 
+// Action Types
+export const SET_SPOTS = 'SET_SPOTS';
 
-const allSpots = (spots) => ({
-    type: ALL_SPOTS,
-    payload: spots,
-})
-export const ALL_SPOTS = 'ALL_SPOTS';
+// Action Creators
+export const setSpots = (spots) => ({
+  type: SET_SPOTS,
+  payload: spots,
+});
 
+// Selector
+export const spotsSelector = createSelector(
+    (state) => state.spots.spots,
+    (allspots) => Object.values(allspots) 
+);
 
-export const LandingPage = () => async (dispatch) => {
-    const response = await fetch('/api/spots')
-    const data = await response.json();
-    dispatch(allSpots(data.spots));
-    return response;
-}
+// Thunk Action
+export const loadSpots = () => async (dispatch) => {
+  const response = await csrfFetch('/api/spots');
+  const spots = await response.json();
+  dispatch(setSpots(spots)); 
+  return response;
+};
 
+// Initial State
+const initialState = { spots: [],};
 
-const initialState = { spots: [], };
-
+// Reducer
 const spotsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ALL_SPOTS:
-            return {
-                ...state,
-                spots: action.payload,
-            };
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case SET_SPOTS:
+      return {
+        ...state,
+        spots: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 export default spotsReducer;

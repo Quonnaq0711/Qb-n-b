@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
+import LandingPage from './components/LandingPage/LandingPage';
 //import LandingPage from './components/LandingPage/LandingPage';
 
 function Layout() {
@@ -11,13 +12,14 @@ function Layout() {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
-      setIsLoaded(true)
+      setIsLoaded(true);
     });
   }, [dispatch]);
 
   return (
     <>
       <Navigation isLoaded={isLoaded} />
+      <LandingPage isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
     </>
   );
@@ -30,14 +32,12 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <h1>Welcome!</h1>,
-         //<LandingPage />,
+        // Uncomment and fill in when ready
+        // path: '/spots',
+        // element: <LandingPage />,
       },
-      // {
-      //   path: '/spots',
-      //   element: //
-      // }
-    ]
-  }
+    ],
+  },
 ]);
 
 function App() {

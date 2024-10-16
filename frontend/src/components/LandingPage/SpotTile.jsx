@@ -1,17 +1,20 @@
 
-import { useHistory } from 'react-router-dom';
+import './TileList.css';
 import './SpotTile.css';
+import { useNavigate } from 'react-router-dom';
 
 function SpotTile({ spot }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    history.push(`/spots/${spot.id}`); // Navigate to the spot detail page
+    navigate(`/spots/${spot.id}`); // Navigate to the spot detail page
   };
 
-  const averageRating = spot.reviews.length ? (
-    (spot.reviews.reduce((acc, review) => acc + review.rating, 0) / spot.reviews.length).toFixed(1)
-  ) : 'New';
+  const averageRating = spot.reviews.length
+    ? (
+        spot.reviews.reduce((acc, review) => acc + review.rating, 0) / spot.reviews.length
+      ).toFixed(1)
+    : 'New';
 
   return (
     <div className="spot-tile" onClick={handleClick}>

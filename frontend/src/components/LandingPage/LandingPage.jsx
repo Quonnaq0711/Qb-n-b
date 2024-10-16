@@ -1,27 +1,27 @@
+import { useEffect, } from 'react';
+import { useDispatch,  } from 'react-redux';
+import { loadSpots, spotsSelector } from '../../store/landingPage';
+import TileList from './TileList';
+import { useSelector } from 'react-redux';
 
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as Landings from '../../store/landingPage'; 
-import TileList from './TileList'; 
 
-const LandingPage = () => {
-    const dispatch = useDispatch();
-    const spots = useSelector((state) => state.spots.spots); // Adjust the state path accordingly
+// LandingPage Component
+const LandingPage = ({ isLoaded }) => {
+  const dispatch = useDispatch();
+  const spots = useSelector(spotsSelector); //state path
+ 
+    
 
-    useEffect(() => {
-        const loadSpots = async () => {
-            await dispatch(Landings())            
-        };
-        loadSpots();
-    }, [dispatch]);
+  useEffect(() => {
+   dispatch(loadSpots());
+  }, [dispatch]);
 
-    return (
-        
-        <div className="landing-page">
-            <h1>Available Spots</h1>
-            <TileList spots={spots} />
-        </div>
-    );
+  return (
+    <div className="landing-page">
+      <h1>Available Spots</h1>
+      {isLoaded ? <TileList spots={spots} /> : <p>Loading...</p>}
+      </div> 
+  );
 };
 
 export default LandingPage;

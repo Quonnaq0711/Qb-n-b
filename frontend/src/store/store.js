@@ -2,10 +2,13 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger'; // Use named import for consistency
 import sessionReducer from './session';
+import spotsReducer from './landingPage';
+
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
-  session:sessionReducer
+  session: sessionReducer,
+ spots: spotsReducer,
 });
 
 const configureStore = (preloadedState) => {
