@@ -59,11 +59,16 @@
     background-color: #0056b3; 
   }
   
-  p {
+  .error,p {
     color: red; 
     font-size: 14px; 
     margin-top: 10px; 
   }
+   /* {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  } */
   
   /* Screen resizing */
   @media (max-width: 480px) {

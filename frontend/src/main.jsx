@@ -7,6 +7,8 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { Modal, ModalProvider } from './context/modal';
+import * as landings from './store/landingPage';
+
 
 const store = configureStore();
 
@@ -16,6 +18,7 @@ if (import.meta.env.MODE !== 'production') {
   window.csrfFetch = csrfFetch;
   window.store = store;
   window.sessionActions = sessionActions;
+  window.landings = landings;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

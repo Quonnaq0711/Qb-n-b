@@ -1,0 +1,38 @@
+/* .spot-tile {
+    border: 1px solid #f4f9e9;
+    border-radius: 8px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .spot-tile:hover {
+    transform: scale(1.05);
+  }
+  
+  .spot-thumbnail {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .spot-info {
+    padding: 10px;
+  }
+  
+  .spot-name {
+    font-size: 1.2em;
+    margin: 0;
+  }
+  
+  .spot-location {
+    color:  #b4b8ab;
+  }
+  
+  .spot-rating {
+    color: #f39c12; /* Gold color for stars */
+  /*}
+  
+  .spot-price {
+    font-weight: bold;
+  }
+   */
