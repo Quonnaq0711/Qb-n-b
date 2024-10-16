@@ -8,7 +8,7 @@ import spotsReducer from './landingPage';
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
- spots: spotsReducer,
+  spots: spotsReducer,
 });
 
 const configureStore = (preloadedState) => {

@@ -8,11 +8,13 @@ function TileList({ spots = {spots} }) {
     return <p>No spots available.</p>;
   }
   return (
+    <>
     <div className="tile-list">
       {spotsArray.map((spot) => (
         <SpotTile key={spot.id} spots={spot} />
       ))}
-    </div>
+      </div>
+    </>
   );
 }
 

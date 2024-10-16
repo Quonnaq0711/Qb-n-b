@@ -17,6 +17,7 @@ function SpotTile({ spot }) {
     : 'New';
 
   return (
+    <>
     <div className="spot-tile" onClick={handleClick}>
       <img src={spot.thumbnail} alt={spot.name} className="spot-thumbnail" />
       <div className="spot-info">
@@ -27,8 +28,11 @@ function SpotTile({ spot }) {
         </div>
         <p className="spot-price">{`$${spot.price} night`}</p>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
 export default SpotTile;
+
+
