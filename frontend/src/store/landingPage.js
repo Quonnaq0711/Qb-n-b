@@ -1,6 +1,3 @@
- //import { createSelector } from "reselect";
-//import { csrfFetch } from "./csrf";
-
 // Action Types
 export const SET_SPOTS = 'SET_SPOTS';
 
@@ -10,14 +7,6 @@ export const setSpots = (spots) => ({
   payload: spots,
 });
 
-// Selector
-// export const spotsSelector = createSelector(
-//   (state) => state.spots.spots,
-//   (allspots) => Object.values(allspots)
-// );
-
-
-
 //Thunk Action 
 export const loadSpots = () => async (dispatch) => {
   const response = await fetch('/api/spots');
@@ -26,9 +15,6 @@ export const loadSpots = () => async (dispatch) => {
     dispatch(setSpots(data.Spots));
   }
 }
-  
-
-
 
 // Initial State
 const initialState = { spots: [], };
@@ -47,4 +33,3 @@ const spotsReducer = (state = initialState, action) => {
 };
 
 export default spotsReducer;
-

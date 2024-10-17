@@ -19,6 +19,7 @@ if (import.meta.env.MODE !== 'production') {
   window.store = store;
   window.sessionActions = sessionActions;
   window.landings = landings;
+  window.review = 
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
