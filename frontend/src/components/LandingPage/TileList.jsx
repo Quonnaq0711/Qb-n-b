@@ -1,24 +1,25 @@
-import SpotTile from './SpotTile';
-import './TileList.css';
 
-function TileList({ spots = {spots} }) { 
-  const spotsArray = spots.Spots || [];
+import './TileList.css';
+import SpotTile from './SpotTile'; // Import the SpotTile component
+
+function TileList({ spots }) {
+  const spotsArray = spots || [];
 
   if (spotsArray.length === 0) {
     return <p>No spots available.</p>;
   }
+
   return (
-    <>
     <div className="tile-list">
-      {spotsArray.map((spot) => (
-        <SpotTile key={spot.id} spots={spot} />
+      {spotsArray.map(spot => (
+        <SpotTile key={spot.id} spot={spot} /> // Use SpotTile for each spot
       ))}
-      </div>
-    </>
+    </div>
   );
 }
 
 export default TileList;
+
 
   
 

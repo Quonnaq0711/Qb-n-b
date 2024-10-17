@@ -1,0 +1,139 @@
+/* SpotDetailsPage.css */
+
+.spot-details-page {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .spot-name {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  .location {
+    font-size: 1.2em;
+    color: gray;
+    margin-bottom: 20px;
+  }
+  
+  .details-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .spot-image {
+    width: 60%;
+    border-radius: 10px;
+  }
+  
+  .other-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .other-images img {
+    width: calc(40% / 2 - 10px);
+    border-radius: 5px;
+  }
+  
+  .info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  
+  .spot-info {
+    flex: 1;
+  }
+  
+  .host-info {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .description {
+    margin-bottom: 20px;
+  }
+  
+  .price-info {
+    width: 300px;
+  }
+  
+  .bordered-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .price {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .review-summary {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .average-rating {
+    font-size: 1.2em;
+  }
+  
+  .star-icon {
+    color: gold;
+  }
+  
+  .dot {
+    margin: 0 5px;
+  }
+  
+  .reserve-button {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .reserve-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .divider {
+    border: none;
+    height: 1px;
+    background-color: black;
+    margin: 20px 0;
+  }
+  
+  .reviews-section {
+    margin-top: 20px;
+  }
+  
+  .review {
+    margin-bottom: 20px;
+  }
+  
+  .reviewer-name {
+    font-weight: bold;
+  }
+  
+  .review-date {
+    color: gray;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
+  
+  .review-details {
+    font-size: 1em;
+  }
+  
