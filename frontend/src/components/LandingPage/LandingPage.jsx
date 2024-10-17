@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadSpots, spotsSelector } from '../../store/landingPage';
+import { loadSpots, } from '../../store/landingPage';
 import TileList from './TileList';
 
 // LandingPage Component
 const LandingPage = ({ isLoaded }) => {
   const dispatch = useDispatch();
-  const spots = useSelector(spotsSelector)  // Ensure spots is at least an empty array || [];
+  const spots = useSelector((state) => state.spots.spots)  
 
   useEffect(() => {
     dispatch(loadSpots());
-  }, [dispatch ]);
+  }, [dispatch, spots]);
 
   console.log(spots);
 

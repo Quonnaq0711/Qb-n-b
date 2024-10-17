@@ -14,10 +14,10 @@ function SpotDetailsPage() {
 
   useEffect(() => {
     dispatch(loadSpots(spotid));
-    dispatch(loadReviews(spotid));
+    dispatch(loadReviews());
   }, [dispatch, spotid]);
 
-  if (!spotDetails) return <div>Loading...</div>;
+  if (!spotDetails) return null;
 
   const handleReserveClick = () => {
     alert("Feature coming soon...");

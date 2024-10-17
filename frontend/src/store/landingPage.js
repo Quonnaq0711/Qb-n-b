@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+ //import { createSelector } from "reselect";
 //import { csrfFetch } from "./csrf";
 
 // Action Types
@@ -11,21 +11,22 @@ export const setSpots = (spots) => ({
 });
 
 // Selector
-export const spotsSelector = createSelector(
-  (state) => state.spots.spots,
-  (allspots) => Object.values(allspots)
-);
+// export const spotsSelector = createSelector(
+//   (state) => state.spots.spots,
+//   (allspots) => Object.values(allspots)
+// );
 
 
 
 //Thunk Action 
 export const loadSpots = () => async (dispatch) => {
   const response = await fetch('/api/spots');
-  const spots = await response.json();
-  dispatch(setSpots(spots));
-  return response;
-};
-
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setSpots(data.Spots));
+  }
+}
+  
 
 
 

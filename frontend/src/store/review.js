@@ -14,22 +14,14 @@ const removeReviews = () => ({
     type: REMOVE_REVIEWS,
 })
 
-
-// Selector
-// export const spotsSelector = createSelector(
-//   (state) => state.spots.spots,
-//   (allspots) => Object.values(allspots)
-// );
-
-
-
 //Thunk Action 
-export const loadReviews = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
-  const reviews = await response.json();
-  dispatch(setReviews(reviews));
-  return response;
-};
+export const loadReviews = () => async (dispatch) => {
+  const response = await fetch('/api/spots/${spotId}/reviews');
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setReviews(data.revivews));
+  }
+}
 
 export const deleteReviews = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots/${spotId}/reviews', {

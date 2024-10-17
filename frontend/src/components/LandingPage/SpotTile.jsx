@@ -11,7 +11,12 @@ function SpotTile({ spot }) {
 
   return (
     <div className="spot-tile" onClick={handleClick}>
+      <img src={spot.previewImage} />
       <h4>{spot.name}</h4>
+      <div className="location">
+        {spot.city}, {spot.state}, {spot.country}
+      </div>
+      <div className="price">${spot.price}/night</div>
       <SpotDetailsPage spot={spot} /> {/* Pass the individual spot */}
     </div>
   );
