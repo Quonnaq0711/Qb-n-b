@@ -7,9 +7,9 @@ const avgRatings = async (spotId) => {
         attributes: ['stars']
     });
 
-    const total = reviews.reduce((sum, review) => sum + review.stars, 0);
+    const total = reviews.reduce((sum, review) => sum + review.stars, 0).toFixed(1);
     if (!reviews.length) {
-        return 0; 
+        return 'New'; 
     }
 
     const avgRatings = total / reviews.length;
