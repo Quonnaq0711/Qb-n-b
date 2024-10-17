@@ -1,5 +1,5 @@
-.spot-tile {
-    border: 1px solid #f4f9e9;
+.tile {
+    border: 1px solid  #153243;
     border-radius: 8px;
     margin: 10px;
     cursor: pointer;
@@ -19,20 +19,20 @@
     padding: 10px;
   }
   
-  .spot-name {
+  h4 {
     font-size: 1.2em;
     margin: 0;
   }
   
-  .spot-location {
-    color:  #b4b8ab;
+  .location {
+    color:  darkblue;
   }
   
-  .spot-rating {
+  .starRatings {
     color: #f39c12; /* Gold color for stars */
   }
   
-  .spot-price {
+  .price {
     font-weight: bold;
   } 
   

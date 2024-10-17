@@ -1,6 +1,6 @@
 
 import './TileList.css';
-import SpotTile from './SpotTile'; // Import the SpotTile component
+import Spot from './Spot'; // Import the SpotTile component
 
 function TileList({ spots }) {
   const spotsArray = spots || [];
@@ -12,7 +12,7 @@ function TileList({ spots }) {
   return (
     <div className="tile-list">
       {spotsArray.map(spot => (
-        <SpotTile key={spot.id} spot={spot} /> // Use SpotTile for each spot
+        <Spot key={spot.id} spot={spot} /> // Use SpotTile for each spot
       ))}
     </div>
   );

@@ -14,7 +14,7 @@ function SpotDetailsPage() {
 
   useEffect(() => {
     dispatch(loadSpots(spotid));
-    dispatch(loadReviews());
+    dispatch(loadReviews(spotid));
   }, [dispatch, spotid]);
 
   if (!spotDetails) return null;
