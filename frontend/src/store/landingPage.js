@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-// import { csrfFetch } from "./csrf";
+//import { csrfFetch } from "./csrf";
 
 // Action Types
 export const SET_SPOTS = 'SET_SPOTS';
@@ -12,7 +12,7 @@ export const setSpots = (spots) => ({
 
 // Selector
 export const spotsSelector = createSelector(
-  (state) => state.spots,
+  (state) => state.spots.spots,
   (allspots) => Object.values(allspots)
 );
 

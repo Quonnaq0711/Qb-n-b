@@ -10,7 +10,7 @@ const LandingPage = ({ isLoaded }) => {
 
   useEffect(() => {
     dispatch(loadSpots());
-  }, [dispatch]);
+  }, [dispatch ]);
 
   console.log(spots);
 

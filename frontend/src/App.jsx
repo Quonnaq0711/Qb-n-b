@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import LandingPage from './components/LandingPage/LandingPage';
-//import LandingPage from './components/LandingPage/LandingPage';
+
 
 function Layout() {
   const dispatch = useDispatch();
