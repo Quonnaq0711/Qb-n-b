@@ -11,12 +11,12 @@ function Spot({ spot }) {
 
   return (
     <div className="tile" onClick={handleClick}>
-      <img src={spot.previewImage} />
+      <img className='img' src={spot.previewImage} />
       <h4>{spot.name}</h4>
-      <div className="location">
+      <div className="tilelocation">
         {spot.city}, {spot.state}, {spot.country}
       </div>
-      <div className="price">${spot.price}/night</div>
+      <div className="tileprice">${spot.price}/night</div>
       <div className="starRatings"> ★ </div>
         {spot.avgStarRating ? spot.avgStarRating.toFixed(1) : 'New'}               
       <SpotDetailsPage spot={spot} /> {/* Pass the individual spot */}     
