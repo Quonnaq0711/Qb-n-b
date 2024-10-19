@@ -1,23 +1,38 @@
-// SpotDetailsPage.js
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadSpots } from '../../store/landingPage'; 
-import { loadReviews } from '../../store/review'; 
+import { loadDetails, loadSpots } from '../../store/landingPage';
+import { loadReviews } from '../../store/review';
 import { useParams } from 'react-router-dom';
-import './spotDetails.css';
+import './IndividualSpot.css';
 
-function SpotDetailsPage() {
+function IndividualSpot() {
   const dispatch = useDispatch();
-  const { spotid } = useParams();
-  const spotDetails = useSelector(state => state.SpotDetailsPage);
-  const reviews = useSelector(state => state.reviews);
+  const { spotId } = useParams();
+  const [loading, setLoading] = useState(true);
+
+  console.log('Spot ID:', spotId);
+
+  const { details: IndividualSpot, reviews } = useSelector(state => ({
+    details: state.spots.details,
+    reviews: state.reviews,
+  }));
 
   useEffect(() => {
-    dispatch(loadSpots(spotid));
-    dispatch(loadReviews(spotid));
-  }, [dispatch, spotid]);
+    const fetchData = async () => {
+      setLoading(true);      
+        await dispatch(loadSpots());
+        await dispatch(loadDetails(spotId));
+        await dispatch(loadReviews(spotId));        
+       {
+        setLoading(false);
+      }
+    };
 
-  if (!spotDetails) return null;
+    fetchData();
+  }, [dispatch, spotId]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!IndividualSpot) return <div>Spot not found.</div>;
 
   const handleReserveClick = () => {
     alert("Feature coming soon...");
@@ -25,20 +40,20 @@ function SpotDetailsPage() {
 
   return (
     <div className="spot-details-page">
-      <h2 className="spot-name">{spotDetails.name}</h2>
+      <h2 className="spot-name">{IndividualSpot.name}</h2>
       <div className="location">
-        {spotDetails.city}, {spotDetails.state}, {spotDetails.country}
+        {IndividualSpot.city}, {IndividualSpot.state}, {IndividualSpot.country}
       </div>
       <div className="details-container">
-        {spotDetails.SpotImages?.length > 0 && (
+        {IndividualSpot.SpotImages?.length > 0 && (
           <img
             className="spot-image"
-            src={spotDetails.SpotImages[0]?.url}
-            alt={spotDetails.name}
+            src={IndividualSpot.SpotImages[0]?.url}
+            alt={`${IndividualSpot.name} main image`}
           />
         )}
         <div className="other-images">
-          {spotDetails.SpotImages?.slice(1).map(image => (
+          {IndividualSpot.SpotImages?.slice(1).map(image => (
             <img
               key={image.id}
               className="thumbnail"
@@ -51,21 +66,21 @@ function SpotDetailsPage() {
       <div className="info-container">
         <div className="spot-info">
           <div className="host-info">
-            Hosted by {spotDetails.Owner.firstName} {spotDetails.Owner.lastName}
+            Hosted by {IndividualSpot.Owner?.firstName || 'Unknown'} {IndividualSpot.Owner?.lastName || ''}
           </div>
-          <div className="description">{spotDetails.description}</div>
+          <div className="description">{IndividualSpot.description}</div>
         </div>
         <div className="price-info">
           <div className="bordered-box">
-            <div className="price">${spotDetails.price} per night</div>
+            <div className="price">${IndividualSpot.price} per night</div>
             <div className="review-summary">
               <div className="average-rating">
                 <span className="star-icon">★</span>
-                {spotDetails.avgStarRating ? spotDetails.avgStarRating.toFixed(1) : 'New'}
-                {spotDetails.numReviews > 0 && (
+                {IndividualSpot.avgStarRating ? IndividualSpot.avgStarRating.toFixed(1) : 'New'}
+                {IndividualSpot.numReviews > 0 && (
                   <>
                     <span className="dot"> · </span>
-                    {spotDetails.numReviews === 1 ? "1 Review" : `${spotDetails.numReviews} Reviews`}
+                    {IndividualSpot.numReviews === 1 ? "1 Review" : `${IndividualSpot.numReviews} Reviews`}
                   </>
                 )}
               </div>
@@ -82,11 +97,11 @@ function SpotDetailsPage() {
         <div className="review-summary">
           <div className="average-rating">
             <span className="star-icon">★</span>
-            {spotDetails.avgStarRating ? spotDetails.avgStarRating.toFixed(1) : 'New'}
-            {spotDetails.numReviews > 0 && (
+            {IndividualSpot.avgStarRating ? IndividualSpot.avgStarRating.toFixed(1) : 'New'}
+            {IndividualSpot.numReviews > 0 && (
               <>
                 <span className="dot"> · </span>
-                {spotDetails.numReviews === 1 ? "1 Review" : `${spotDetails.numReviews} Reviews`}
+                {IndividualSpot.numReviews === 1 ? "1 Review" : `${IndividualSpot.numReviews} Reviews`}
               </>
             )}
           </div>
@@ -109,7 +124,11 @@ function SpotDetailsPage() {
   );
 }
 
-export default SpotDetailsPage;
+export default IndividualSpot;
+
+
+
+
 
 
 

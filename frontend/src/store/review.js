@@ -2,37 +2,41 @@ import { csrfFetch } from "./csrf";
 
 // Action Types
 export const SET_REVIEWS = 'SET_REVIEWS';
-export const REMOVE_REVIEWS ='REMOVE_REVIEWS'
-
+export const REMOVE_REVIEWS = 'REMOVE_REVIEWS';
 
 // Action Creators
 const setReviews = (reviews) => ({
   type: SET_REVIEWS,
   payload: reviews,
 });
+
 const removeReviews = () => ({
-    type: REMOVE_REVIEWS,
-})
+  type: REMOVE_REVIEWS,
+});
 
-//Thunk Action 
-export const loadReviews = () => async (dispatch) => {
-  const response = await fetch('/api/spots/${spotId}/reviews');
+// Thunk Action 
+export const loadReviews = (spotId) => async (dispatch) => { 
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setReviews(data.reviews)); 
+      return response;
+    }
+};
+
+export const deleteReviews = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: 'DELETE',
+  });
+  
   if (response.ok) {
-    const data = await response.json();
-    dispatch(setReviews(data.revivews));
-  }
-}
-
-export const deleteReviews = () => async (dispatch) => {
-    const response = await csrfFetch('/api/spots/${spotId}/reviews', {
-      method: 'DELETE'
-    });  
     dispatch(removeReviews());
-    return response;
-  };
+  }
+  return response;
+};
 
 // Initial State
-const initialState = { reviews: [],};
+const initialState = { reviews: [] };
 
 // Reducer
 const reviewsReducer = (state = initialState, action) => {
@@ -40,7 +44,12 @@ const reviewsReducer = (state = initialState, action) => {
     case SET_REVIEWS:
       return {
         ...state,
-        reviews: action.payload,
+        reviews: action.payload, 
+      };
+    case REMOVE_REVIEWS:
+      return {
+        ...state,
+        reviews: [], 
       };
     default:
       return state;
@@ -48,4 +57,5 @@ const reviewsReducer = (state = initialState, action) => {
 };
 
 export default reviewsReducer;
+
 

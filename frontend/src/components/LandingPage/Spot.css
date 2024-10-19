@@ -1,12 +1,22 @@
 .tile {
-    border: 1px solid  #153243;
-    border-radius: 8px;
-    margin: 10px;
-    cursor: pointer;
-    transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px; 
+  padding: 20px;
+  background-color:#b4b8ab; 
+  border-radius: 8px;
+  box-shadow: 0 4px 10px #4b0082;
+  position: relative;
+  border: 1px solid  #153243;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.5s;
   }
   
-  .spot-tile:hover {
+  .tile:hover {
     transform: scale(1.05);
   }
   
@@ -16,7 +26,7 @@
   }
   
   .spot-info {
-    padding: 10px;
+    padding: 5px;
   }
   
   h4 {
@@ -26,6 +36,7 @@
   
   .location {
     color:  darkblue;
+    font-size: small;
   }
   
   .starRatings {
@@ -34,5 +45,6 @@
   
   .price {
     font-weight: bold;
+    font-size: medium;
   } 
   

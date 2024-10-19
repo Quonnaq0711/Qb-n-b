@@ -6,7 +6,7 @@ function Spot({ spot }) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/spots/${spot.id}`); // Navigate to the spot detail page
+    navigate(`/spots/${spot.id}`); 
   };
 
   return (
@@ -17,9 +17,9 @@ function Spot({ spot }) {
         {spot.city}, {spot.state}, {spot.country}
       </div>
       <div className="price">${spot.price}/night</div>
-      <span className="starRatings">★</span>
-                {spot.avgStarRating ? spot.avgStarRating.toFixed(1) : 'New'}
-      <SpotDetailsPage spot={spot} /> {/* Pass the individual spot */}
+      <div className="starRatings"> ★ </div>
+        {spot.avgStarRating ? spot.avgStarRating.toFixed(1) : 'New'}               
+      <SpotDetailsPage spot={spot} /> {/* Pass the individual spot */}     
     </div>
   );
 }
