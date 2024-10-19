@@ -17,8 +17,8 @@ function Navigation({ isLoaded }) {
   return (
     <nav className="navbar">
       <div className="logo">
-        <NavLink to="/" aria-label="Home">
-          <img src="./src/images/Design 2.png" alt="App Logo" />
+        <NavLink to="/" aria-label="Home" >
+          <img src="./src/images/Design2.png" alt="App Logo" />
         </NavLink>
       </div>
       <ul>

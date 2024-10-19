@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger'; // Use named import for consistency
 import sessionReducer from './session';
 import spotsReducer from './landingPage';
+import reviewsReducer from './review';
 
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   spots: spotsReducer,
+  reviews:reviewsReducer,
 });
 
 const configureStore = (preloadedState) => {

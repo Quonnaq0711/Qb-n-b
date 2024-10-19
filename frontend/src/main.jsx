@@ -8,6 +8,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { Modal, ModalProvider } from './context/modal';
 import * as landings from './store/landingPage';
+import reviewsReducer from './store/review';
 
 
 const store = configureStore();
@@ -19,6 +20,7 @@ if (import.meta.env.MODE !== 'production') {
   window.store = store;
   window.sessionActions = sessionActions;
   window.landings = landings;
+  window.review = reviewsReducer;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(

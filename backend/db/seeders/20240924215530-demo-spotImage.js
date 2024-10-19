@@ -22,17 +22,17 @@ module.exports = {
     await spotImage.bulkCreate([
     {
       spotId: 1,
-      url: "image url 1",
+      url:"https://media.istockphoto.com/id/2155877631/photo/luxury-home-with-charming-roof-on-a-quaint-street-in-encino-ca.webp?a=1&b=1&s=612x612&w=0&k=20&c=ieVJPRZWssYEoN9dJa5BYqgq1skPK9yybnfrAY1i8f0=",
       preview: true
     },
     {
       spotId: 2,
-      url: "image url 2",
+      url: "https://images.pexels.com/photos/2459/stairs-home-loft-lifestyle.jpg?auto=compress&cs=tinysrgb&w=800",
       preview: true
     },
     {
       spotId: 3,
-      url: "image url 3",
+      url: "https://images.pexels.com/photos/7746560/pexels-photo-7746560.jpeg?auto=compress&cs=tinysrgb&w=800",
       preview: true
     }
     ], options)

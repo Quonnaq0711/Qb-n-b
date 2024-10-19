@@ -1,0 +1,58 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px; 
+  padding: 10px;
+  background-color:#b4b8ab; 
+  border-radius: 8px;
+  box-shadow: 0 4px 10px #4b0082;
+  position: relative;
+  border: 1px solid  #153243;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+  transition: transform 0.5s;
+  }
+  
+  .tile:hover {
+    transform: scale(1.05);
+  }
+  
+  .spot-thumbnail {
+    width: 100%; /* Make the image take the full width of the tile */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px 8px 0 0; /* Round the top corners */
+  }
+  
+  .spot-info {
+    padding: 5px;
+  }
+  
+  h4 {
+    font-size: 1.2em;
+    margin: 0;
+  }
+  
+  .tilelocation {
+    color:  darkblue;
+    font-size: large;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .starRatings {
+    color: #f39c12; /* Gold color for stars */
+  }
+  
+  .tileprice {
+    font-weight: bold;
+    font-size: medium;
+  } 
+
+  .img {
+  width: 95px;      /* Set the width of the container */
+  height: 95px;
+  }
+  
