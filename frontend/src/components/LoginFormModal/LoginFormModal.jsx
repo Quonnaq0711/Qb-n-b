@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'; 
 import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/modal';
+// import { useModal } from '../../context/modal';
 import './LoginForm.css';
 
-function LoginFormModal() {
+function LoginFormModal({ closeModal }) {
   const dispatch = useDispatch();
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
+  // const { closeModal } = useModal();
 
   const isDisabled = !credential || !password
 
