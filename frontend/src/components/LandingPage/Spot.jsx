@@ -18,7 +18,7 @@ function Spot({ spot }) {
       </div>
       <div className="tileprice">${spot.price}/night</div>
       <div className="starRatings"> ★ </div>
-        {spot.avgStarRating ? spot.avgStarRating.toFixed(1) : 'New'}               
+      {spot.avgStarRating ? spot.avgStarRating.toFixed(1) : 'New'}       
       <SpotDetailsPage spot={spot} /> {/* Pass the individual spot */}     
     </div>
   );

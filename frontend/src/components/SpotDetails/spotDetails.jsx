@@ -1,7 +1,7 @@
 // SpotDetailsPage.js
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadSpots } from '../../store/landingPage'; 
+import { loadSpots } from '../../store/landingPage';
 import { loadReviews } from '../../store/review'; 
 import { useParams } from 'react-router-dom';
 import './spotDetails.css';
@@ -9,15 +9,28 @@ import './spotDetails.css';
 function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotid } = useParams();
-  const spotDetails = useSelector(state => state.SpotDetailsPage);
-  const reviews = useSelector(state => state.reviews);
+  const spotDetails = useSelector(state => state.spots.details);
+  const reviews = useSelector(state => state.reviews); // Assuming this holds reviews
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    dispatch(loadSpots(spotid));
-    dispatch(loadReviews(spotid));
+    const fetchData = async () => {
+      try {
+        await dispatch(loadSpots(spotid));
+        await dispatch(loadReviews(spotid));
+      } catch (err) {
+        setError('Failed to load data. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
   }, [dispatch, spotid]);
 
-  if (!spotDetails) return null;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!spotDetails) return <div>Spot not found.</div>;
 
   const handleReserveClick = () => {
     alert("Feature coming soon...");
@@ -34,7 +47,7 @@ function SpotDetailsPage() {
           <img
             className="spot-image"
             src={spotDetails.SpotImages[0]?.url}
-            alt={spotDetails.name}
+            alt={`Main image of ${spotDetails.name}`}
           />
         )}
         <div className="other-images">
@@ -43,7 +56,7 @@ function SpotDetailsPage() {
               key={image.id}
               className="thumbnail"
               src={image.url}
-              alt="Spot Thumbnail"
+              alt={`Thumbnail of ${spotDetails.name}`}
             />
           ))}
         </div>
@@ -92,15 +105,14 @@ function SpotDetailsPage() {
           </div>
         </div>
         {Array.isArray(reviews) && reviews.length > 0 ? (
-          reviews.map(review => (
-            <div className="review" key={review.id}>
-              <div className="reviewer-name">{review.User?.firstName || 'Anonymous'}</div>
-              <div className="review-date">
-                {new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}
-              </div>
-              <div className="review-details">{review.review}</div>
-            </div>
-          ))
+          <ul>
+            {reviews.map(review => (
+              <li key={review.id}>
+                <strong>{review.user.firstName}:</strong> {review.comment} 
+                <span className="review-rating"> ★{review.rating}</span>
+              </li>
+            ))}
+          </ul>
         ) : (
           <div>Be the first to post a review!</div>
         )}
@@ -110,6 +122,10 @@ function SpotDetailsPage() {
 }
 
 export default SpotDetailsPage;
+
+
+
+
 
 
 

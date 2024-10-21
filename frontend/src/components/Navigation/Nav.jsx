@@ -4,7 +4,7 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormPageModal';
-import { FaBars } from "react-icons/fa";
+import { FaBars } from 'react-icons/fa';
 import { useState } from 'react';
 import './Nav.css';
 
@@ -17,20 +17,25 @@ function Navigation({ isLoaded }) {
   return (
     <nav className="navbar">
       <div className="logo">
-        <NavLink to="/" aria-label="Home" >
+        <NavLink to="/" aria-label="Home">
           <img src="./src/images/Design2.png" alt="App Logo" />
         </NavLink>
       </div>
-      <ul>
+      <ul className="nav-links">
         <li>
           <NavLink to="/" className="nav-link">Home</NavLink>
         </li>
         {isLoaded && (
           <>
             {sessionUser ? (
-              <li key="profile">
-                <ProfileButton user={sessionUser} />
-              </li>
+              <>
+                <li>
+                  <NavLink to="/spots" className="nav-link">Create a New Spot</NavLink>
+                </li>
+                <li>
+                  <ProfileButton user={sessionUser} />
+                </li>
+              </>
             ) : (
               <li className="menu">
                 <button aria-label="Menu" className="menu-button" onClick={toggleDropdown}>
@@ -38,14 +43,14 @@ function Navigation({ isLoaded }) {
                 </button>
                 {dropdownOpen && (
                   <ul className="dropdown">
-                    <li key="login">
+                    <li>
                       <OpenModalButton
                         buttonText="Log In"
                         modalComponent={<LoginFormModal />}
                         aria-label="Log In"
                       />
                     </li>
-                    <li key="signup">
+                    <li>
                       <OpenModalButton
                         buttonText="Sign Up"
                         modalComponent={<SignupFormModal />}
@@ -64,5 +69,6 @@ function Navigation({ isLoaded }) {
 }
 
 export default Navigation;
+
 
 

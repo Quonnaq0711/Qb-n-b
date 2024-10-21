@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadDetails, loadSpots } from '../../store/landingPage';
 import { loadReviews } from '../../store/review';
+import ReviewModal from '../ReviewModal/ReviewModal';
+import ReviewList from '../ReviewModal/ReviewList'; 
 import { useParams } from 'react-router-dom';
 import './IndividualSpot.css';
 
@@ -9,56 +11,67 @@ function IndividualSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
-  console.log('Spot ID:', spotId);
-
-  const { details: IndividualSpot, reviews } = useSelector(state => ({
-    details: state.spots.details,
-    reviews: state.reviews,
-  }));
+  const individualSpot = useSelector(state => state.spots.details);
+  const reviews = useSelector(state => state.reviews.reviews);
+  const currentUser = useSelector(state => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);      
+      setLoading(true);
+      setError(null);
+      try {
         await dispatch(loadSpots());
         await dispatch(loadDetails(spotId));
-        await dispatch(loadReviews(spotId));        
-       {
+        await dispatch(loadReviews(spotId));
+      } catch (err) {
+        setError('Failed to load data. Please try again later.');
+      } finally {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [dispatch, spotId]);
 
   if (loading) return <div>Loading...</div>;
-  if (!IndividualSpot) return <div>Spot not found.</div>;
+  if (error) return <div>{error}</div>;
+  if (!individualSpot) return <div>Spot not found.</div>;
+
+  const hasReviewed = Array.isArray(reviews) && reviews.some(review => review.userId === currentUser?.id);
+  const isOwner = currentUser?.id === individualSpot?.Owner?.id;
 
   const handleReserveClick = () => {
     alert("Feature coming soon...");
   };
 
+  const handleReviewSubmit = () => {
+    dispatch(loadReviews(spotId));
+    setModalOpen(false);
+  };
+
   return (
     <div className="spot-details-page">
-      <h2 className="spot-name">{IndividualSpot.name}</h2>
+      <h2 className="spot-name">{individualSpot.name}</h2>
       <div className="location">
-        {IndividualSpot.city}, {IndividualSpot.state}, {IndividualSpot.country}
+        {individualSpot.city}, {individualSpot.state}, {individualSpot.country}
       </div>
       <div className="details-container">
-        {IndividualSpot.SpotImages?.length > 0 && (
+        {individualSpot.SpotImages?.length > 0 && (
           <img
             className="spot-image"
-            src={IndividualSpot.SpotImages[0]?.url}
-            alt={`${IndividualSpot.name} main image`}
+            src={individualSpot.SpotImages[0]?.url}
+            alt={`${individualSpot.name} main image`}
           />
         )}
         <div className="other-images">
-          {IndividualSpot.SpotImages?.slice(1).map(image => (
+          {individualSpot.SpotImages?.slice(1).map(image => (
             <img
               key={image.id}
               className="thumbnail"
               src={image.url}
-              alt="Spot Thumbnail"
+              alt={`Thumbnail of ${individualSpot.name}`}
             />
           ))}
         </div>
@@ -66,21 +79,21 @@ function IndividualSpot() {
       <div className="info-container">
         <div className="spot-info">
           <div className="host-info">
-            Hosted by {IndividualSpot.Owner?.firstName || 'Unknown'} {IndividualSpot.Owner?.lastName || ''}
+            Hosted by {individualSpot.Owner?.firstName || 'Unknown'} {individualSpot.Owner?.lastName || ''}
           </div>
-          <div className="description">{IndividualSpot.description}</div>
+          <div className="description">{individualSpot.description}</div>
         </div>
         <div className="price-info">
           <div className="bordered-box">
-            <div className="price">${IndividualSpot.price} per night</div>
+            <div className="price">${individualSpot.price} per night</div>
             <div className="review-summary">
               <div className="average-rating">
                 <span className="star-icon">★</span>
-                {IndividualSpot.avgStarRating ? IndividualSpot.avgStarRating.toFixed(1) : 'New'}
-                {IndividualSpot.numReviews > 0 && (
+                {individualSpot.avgStarRating ? individualSpot.avgStarRating.toFixed(1) : 'New'}
+                {individualSpot.numReviews > 0 && (
                   <>
                     <span className="dot"> · </span>
-                    {IndividualSpot.numReviews === 1 ? "1 Review" : `${IndividualSpot.numReviews} Reviews`}
+                    {individualSpot.numReviews === 1 ? "1 Review" : `${individualSpot.numReviews} Reviews`}
                   </>
                 )}
               </div>
@@ -97,34 +110,44 @@ function IndividualSpot() {
         <div className="review-summary">
           <div className="average-rating">
             <span className="star-icon">★</span>
-            {IndividualSpot.avgStarRating ? IndividualSpot.avgStarRating.toFixed(1) : 'New'}
-            {IndividualSpot.numReviews > 0 && (
+            {individualSpot.avgStarRating ? individualSpot.avgStarRating.toFixed(1) : 'New'}
+            {individualSpot.numReviews > 0 && (
               <>
                 <span className="dot"> · </span>
-                {IndividualSpot.numReviews === 1 ? "1 Review" : `${IndividualSpot.numReviews} Reviews`}
+                {individualSpot.numReviews === 1 ? "1 Review" : `${individualSpot.numReviews} Reviews`}
               </>
             )}
           </div>
         </div>
+        {currentUser && !isOwner && !hasReviewed && (
+          <button onClick={() => setModalOpen(true)}>Post Your Review</button>
+        )}
         {Array.isArray(reviews) && reviews.length > 0 ? (
-          reviews.map(review => (
-            <div className="review" key={review.id}>
-              <div className="reviewer-name">{review.User?.firstName || 'Anonymous'}</div>
-              <div className="review-date">
-                {new Date(review.createdAt).toLocaleString('default', { month: 'long', year: 'numeric' })}
-              </div>
-              <div className="review-details">{review.review}</div>
-            </div>
-          ))
+          <ReviewList reviews={reviews} />
         ) : (
           <div>Be the first to post a review!</div>
         )}
       </div>
+      {isModalOpen && (
+        <ReviewModal
+          spotId={spotId}
+          onClose={() => setModalOpen(false)}
+          onReviewSubmit={handleReviewSubmit}
+        />
+      )}
     </div>
   );
 }
 
 export default IndividualSpot;
+
+
+
+
+
+
+
+
 
 
 

@@ -4,110 +4,111 @@
     margin: 15px auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-    background-color: grey;
+    background-color: #f0f0f0; /* Lighter background for contrast */
     border-radius: 8px;
-    border-color: 5px #4b0082;
-    box-shadow: 0 5px 10px #4b0082;
-  }
-  
-  /* Spot name and location */
-  .spot-name {
-    font-size: 2em;
+    border: 5px solid #4b0082; /* Border color adjustment */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Spot name and location */
+.spot-name {
+    font-size: 2.5em; /* Increased size for prominence */
     margin-bottom: 10px;
-    
-  }
-  
-  .location {
+    color: #333; /* Darker color for better visibility */
+}
+
+.location {
     font-size: 1.2em;
-    color: grey;
-  }
-  
-  /* Image styles */
-  .details-container {
+    color: #666; /* Softer grey for location */
+}
+
+/* Image styles */
+.details-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    background-color: grey;
-  }
-  
-  .spot-image {
+}
+
+.spot-image {
     width: 100%;
     max-height: 400px;
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 10px;
-  }
-  
-  .other-images {
+    border: 2px solid #ddd; /* Optional border for main image */
+}
+
+.other-images {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-  }
-  
-  .thumbnail {
+}
+
+.thumbnail {
     width: calc(33.33% - 10px);
     height: 100px;
     object-fit: cover;
     border-radius: 5px;
-  }
-  
-  /* Info container */
-  .info-container {
+    border: 1px solid #ddd; /* Border for thumbnails */
+}
+
+/* Info container */
+.info-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-    
-  }
-  
-  .spot-info {
+}
+
+.spot-info {
     flex: 1;
     margin-right: 20px;
-  }
-  
-  .host-info {
+}
+
+.host-info {
     font-weight: bold;
     margin-bottom: 5px;
-  }
-  
-  .description {
+}
+
+.description {
     margin-top: 10px;
-  }
-  
-  /* Price and review summary */
-  .price-info {
+    line-height: 1.5; /* Improved readability */
+}
+
+/* Price and review summary */
+.price-info {
     flex: 0 0 300px; /* Fixed width for price info */
-  }
-  
-  .bordered-box {
+}
+
+.bordered-box {
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
-    background-color: #4b0082 ;
-  }
-  
-  .price {
+    background-color: #4b0082;
+    color: #fff; /* White text for contrast */
+}
+
+.price {
     font-size: 1.5em;
     color: #ec971f; /* A warm color for the price */
-  }
-  
-  .review-summary {
+}
+
+.review-summary {
     margin: 10px 0;
-    color: #eef0eb;
-    
-  }
-  
-  .average-rating {
+}
+
+.average-rating {
     display: flex;
     align-items: center;
-  }
-  
-  .star-icon {
+}
+
+.star-icon {
     color: #f39c12; /* Star color */
     margin-right: 5px;
-  }
-  
-  .reserve-button {
+}
+
+/* Reserve button */
+.reserve-button {
     padding: 10px 15px;
     font-size: 1em;
     color: #fff;
@@ -115,43 +116,66 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .reserve-button:hover {
+    transition: background-color 0.3s, transform 0.2s; /* Added transform for button press */
+}
+
+.reserve-button:hover {
     background-color: #2980b9; /* Darker shade on hover */
-  }
-  
-  /* Divider */
-  .divider {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Divider */
+.divider {
     border: none;
     border-top: 1px solid #ddd;
     margin: 20px 0;
-  }
-  
-  /* Reviews section */
-  .reviews-section {
+}
+
+/* Reviews section */
+.reviews-section {
     margin-top: 20px;
-  }
-  
-  .review {
+}
+
+.review {
     background-color: #fff;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0 1px 3px black
-  }
-  
-  .reviewer-name {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.reviewer-name {
     font-weight: bold;
-  }
-  
-  .review-date {
+}
+
+.review-date {
     color: #999;
     font-size: 0.9em;
-  }
-  
-  .review-details {
+}
+
+.review-details {
     margin-top: 5px;
-  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .details-container {
+        flex-direction: column; /* Stack images on smaller screens */
+    }
+
+    .thumbnail {
+        width: 100%; /* Thumbnails take full width on small screens */
+        height: auto; /* Auto height for responsive design */
+    }
+
+    .info-container {
+        flex-direction: column; /* Stack info section on small screens */
+        margin-bottom: 15px;
+    }
+
+    .price-info {
+        margin-top: 15px; /* Spacing adjustments */
+    }
+}
+
   
