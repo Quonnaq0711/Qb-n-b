@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-
 function ReviewModal({ spotId, onClose, onReviewSubmit }) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(null);
@@ -32,7 +31,7 @@ function ReviewModal({ spotId, onClose, onReviewSubmit }) {
       // Clear form
       setComment('');
       setRating(null);
-
+      
       // Clear success message after a few seconds
       setTimeout(() => setSuccess(''), 3000);
     } catch {
@@ -41,7 +40,7 @@ function ReviewModal({ spotId, onClose, onReviewSubmit }) {
   };
 
   return (
-    <div className="modal">
+    <div className="modal-container">
       <h2>How was your stay?</h2>
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
@@ -71,4 +70,5 @@ function ReviewModal({ spotId, onClose, onReviewSubmit }) {
 }
 
 export default ReviewModal;
+
 

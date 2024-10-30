@@ -12,7 +12,7 @@ function TileList({ spots }) {
     
     <div className="tile-list">
       {spotsArray.map(spot => (
-        <Spot key={spot.id} spot={spot} /> // Use Spot for each spot
+        <Spot key={spot.id} spot={spot} /> // Use Spot for each tile
       ))}
     </div>
   );

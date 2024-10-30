@@ -40,7 +40,6 @@ function CreateASpot() {
         if (!form.previewImageUrl) newErrors.previewImageUrl = "Preview Image URL is required";
         if (!form.price) newErrors.price = "Price per night is required";
         if (form.description.length < 30) newErrors.description = "Description needs 30 or more characters";
-        // Add more validations as needed
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
       };
@@ -48,7 +47,7 @@ function CreateASpot() {
       const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
-          // Submit the form data to your backend API
+          // Submit the form data to backend 
           const response = await fetch('/api/spots', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -159,7 +158,7 @@ function CreateASpot() {
               ))}
             </section>
     
-            <button type="submit">Create Spot</button>
+            <button className='createspotbutton' type="submit">Create Spot</button>
           </form>
         </div>
       );

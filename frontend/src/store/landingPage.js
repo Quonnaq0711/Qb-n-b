@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf"; 
+
 // Action Types
 export const SET_SPOTS = 'SET_SPOTS';
 export const REMOVE_SPOT = 'REMOVE_SPOT';
@@ -36,7 +38,7 @@ export const loadSpots = () => async (dispatch) => {
 
 export const deleteSpot = (spotId) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: 'DELETE',
     });
     if (response.ok) {
@@ -51,7 +53,7 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 
 export const loadDetails = (spotId) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/spots/${spotId}`);
+    const response = await csrfFetch(`/api/spots/${spotId}`);
     if (response.ok) {
       const spot = await response.json();
       dispatch(setSpotDetails(spot));

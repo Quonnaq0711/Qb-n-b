@@ -1,32 +1,36 @@
 // SpotDetailsPage.js
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadSpots } from '../../store/landingPage';
+import { loadDetails } from '../../store/landingPage';
 import { loadReviews } from '../../store/review'; 
 import { useParams } from 'react-router-dom';
+import ReviewModal from '../ReviewModal/ReviewModal'; // Make sure to import your ReviewModal
 import './spotDetails.css';
 
 function SpotDetailsPage() {
   const dispatch = useDispatch();
-  const { spotid } = useParams();
+  const { spotId } = useParams();
   const spotDetails = useSelector(state => state.spots.details);
-  const reviews = useSelector(state => state.reviews); // Assuming this holds reviews
+  const reviews = useSelector(state => state.reviews); // Ensure this is the correct state shape
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false); // State for the review modal
+  const currentUser = useSelector(state => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await dispatch(loadSpots(spotid));
-        await dispatch(loadReviews(spotid));
+        await dispatch(loadDetails(spotId));
+        await dispatch(loadReviews(spotId));
       } catch (err) {
+        console.error(err); // Log the error for debugging
         setError('Failed to load data. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, [dispatch, spotid]);
+  }, [dispatch, spotId]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -35,6 +39,9 @@ function SpotDetailsPage() {
   const handleReserveClick = () => {
     alert("Feature coming soon...");
   };
+
+  const hasReviewed = Array.isArray(reviews) && reviews.some(review => review.userId === currentUser?.id);
+  const isOwner = currentUser?.id === spotDetails?.Owner?.id;
 
   return (
     <div className="spot-details-page">
@@ -91,19 +98,10 @@ function SpotDetailsPage() {
       </div>
       <hr className="divider" />
       <div className="reviews-section">
-        <h3>Reviews</h3>
-        <div className="review-summary">
-          <div className="average-rating">
-            <span className="star-icon">★</span>
-            {spotDetails.avgStarRating ? spotDetails.avgStarRating.toFixed(1) : 'New'}
-            {spotDetails.numReviews > 0 && (
-              <>
-                <span className="dot"> · </span>
-                {spotDetails.numReviews === 1 ? "1 Review" : `${spotDetails.numReviews} Reviews`}
-              </>
-            )}
-          </div>
-        </div>
+        <h3>Reviews</h3>      
+        {currentUser && !isOwner && !hasReviewed && (
+          <button onClick={() => setModalOpen(true)}>Post Your Review</button>
+        )}
         {Array.isArray(reviews) && reviews.length > 0 ? (
           <ul>
             {reviews.map(review => (
@@ -117,11 +115,19 @@ function SpotDetailsPage() {
           <div>Be the first to post a review!</div>
         )}
       </div>
+      {isModalOpen && (
+        <ReviewModal
+          spotId={spotId}
+          onClose={() => setModalOpen(false)}
+          // Add onReviewSubmit or any necessary prop for handling submission
+        />
+      )}
     </div>
   );
 }
 
 export default SpotDetailsPage;
+
 
 
 
