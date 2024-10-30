@@ -1,48 +1,35 @@
 // SpotDetailsPage.js
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadDetails } from '../../store/landingPage';
-import { loadReviews } from '../../store/review'; 
-import { useParams } from 'react-router-dom';
-import ReviewModal from '../ReviewModal/ReviewModal'; // Make sure to import your ReviewModal
+import { loadDetails } from '../../store/landingPage'; 
+import { useParams } from 'react-router-dom'; 
 import './spotDetails.css';
 
 function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spotDetails = useSelector(state => state.spots.details);
-  const reviews = useSelector(state => state.reviews); // Ensure this is the correct state shape
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isModalOpen, setModalOpen] = useState(false); // State for the review modal
-  const currentUser = useSelector(state => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        await dispatch(loadDetails(spotId));
-        await dispatch(loadReviews(spotId));
-      } catch (err) {
-        console.error(err); // Log the error for debugging
-        setError('Failed to load data. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
+      setLoading(true);
+      setError(null);
+      
+      await dispatch(loadDetails(spotId)); // loadDetails fetches a single spot
+      
+      setLoading(false);
+    };    
     fetchData();
   }, [dispatch, spotId]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!spotDetails) return <div>Spot not found.</div>;
+  if (loading) return <div className="loading-indicator">Loading...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  // if (!spotDetails) return <div className="error-message">Spot not found.</div>;
 
-  const handleReserveClick = () => {
-    alert("Feature coming soon...");
-  };
-
-  const hasReviewed = Array.isArray(reviews) && reviews.some(review => review.userId === currentUser?.id);
-  const isOwner = currentUser?.id === spotDetails?.Owner?.id;
-
+  setError('Failed to load spot details. Please try again later.');
+  
   return (
     <div className="spot-details-page">
       <h2 className="spot-name">{spotDetails.name}</h2>
@@ -89,46 +76,15 @@ function SpotDetailsPage() {
                   </>
                 )}
               </div>
-            </div>
-            <button className="reserve-button" onClick={handleReserveClick}>
-              Reserve
-            </button>
+            </div>            
           </div>
         </div>
-      </div>
-      <hr className="divider" />
-      <div className="reviews-section">
-        <h3>Reviews</h3>      
-        {currentUser && !isOwner && !hasReviewed && (
-          <button onClick={() => setModalOpen(true)}>Post Your Review</button>
-        )}
-        {Array.isArray(reviews) && reviews.length > 0 ? (
-          <ul>
-            {reviews.map(review => (
-              <li key={review.id}>
-                <strong>{review.user.firstName}:</strong> {review.comment} 
-                <span className="review-rating"> ★{review.rating}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <div>Be the first to post a review!</div>
-        )}
-      </div>
-      {isModalOpen && (
-        <ReviewModal
-          spotId={spotId}
-          onClose={() => setModalOpen(false)}
-          // Add onReviewSubmit or any necessary prop for handling submission
-        />
-      )}
+      </div>     
     </div>
   );
 }
 
 export default SpotDetailsPage;
-
-
 
 
 

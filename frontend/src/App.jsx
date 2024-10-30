@@ -6,6 +6,7 @@ import * as sessionActions from './store/session';
 import LandingPage from './components/LandingPage/LandingPage';
 import IndividualSpot from './components/SpotDetails/IndividualSpot';
 import CreateASpot from './components/CreateSpot/createspot';
+import NotFound from './components/NotFound /notfound';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
       {
         path: '/spots',
         element: <CreateASpot />,
-     }
+      },
+      {
+        path: '*',
+        element: <NotFound />
+      }
     ],
   },
 ]);

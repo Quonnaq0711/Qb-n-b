@@ -1,0 +1,98 @@
+.reviewmodal-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px #4b0082;
+    padding: 20px;
+    z-index: 1000;
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .reviewmodal-container h2 {
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .reviewtextarea {
+    width: 95%;
+    height: 100px;
+    border-radius: 4px;
+    border: 1px solid #007bff;
+    padding: 10px;
+    resize: none;
+    font-size: 1rem;
+  }
+  
+  .reviewtextarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  .input {
+   
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  button {
+    background-color: #4b0082;
+    color:#eef0eb;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .error {
+    color: red;
+    margin: 10px 0;
+  }
+  
+  .success {
+    color: green;
+    margin: 10px 0;
+  }
+  
+  .Close {
+    background-color: transparent;
+    color: #eef0eb;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .Close:hover {
+    text-decoration: underline;
+  }
+
+  .reviewlable {
+    font-size: large;
+    margin-top: 5px;
+  }
+  

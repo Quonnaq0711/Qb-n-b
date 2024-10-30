@@ -3,24 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadDetails, loadSpots } from '../../store/landingPage';
 import { loadReviews } from '../../store/review';
 import ReviewModal from '../ReviewModal/ReviewModal';
-// import ReviewList from '../ReviewModal/ReviewList'; 
 import { useParams } from 'react-router-dom';
 import './IndividualSpot.css';
 
 function IndividualSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const individualSpot = useSelector(state => state.spots.details);
   const reviews = useSelector(state => state.reviews.reviews);
-  const currentUser = useSelector(state => state.user);
+  const currentUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       setError(null);
       try {
         await dispatch(loadSpots());
@@ -29,14 +26,11 @@ function IndividualSpot() {
       } catch (err) {
         console.error(err); // Log error for debugging
         setError('Failed to load data. Please try again later.');
-      } finally {
-        setLoading(false);
       }
     };   
     fetchData();
   }, [dispatch, spotId]);
 
-  if (loading) return <div className="loading-indicator">Loading...</div>;
   if (error) return <div className="error-message">{error}</div>;
   if (!individualSpot) return <div className="error-message">Spot not found.</div>;
 
@@ -108,18 +102,19 @@ function IndividualSpot() {
       <hr className="divider" />
       <div className="reviews-section">
         <h3>Reviews</h3>        
-        {!currentUser && !isOwner && !hasReviewed && (
+        {currentUser && !isOwner && !hasReviewed && (
           <button onClick={() => setModalOpen(true)}>Post Your Review</button>
         )}
         {Array.isArray(reviews) && reviews.length > 0 ? (
           <ul>
-          {reviews.map(review => (
-            <li key={review.id}>
-              <strong>{review.user.firstName}:</strong> {review.comment} 
-              <span className="review-rating"> ★{review.rating}</span>
-            </li>
-          ))}
-        </ul>
+            {reviews.map(review => (
+              <li key={review.id}>
+                <strong>{review.User.firstName}:
+                </strong> {review.review} 
+                <span className="review-rating"> ★{review.stars}</span>
+              </li>
+            ))}
+          </ul>
         ) : (
           <div>Be the first to post a review!</div>
         )}
@@ -136,6 +131,7 @@ function IndividualSpot() {
 }
 
 export default IndividualSpot;
+
 
 
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './ReviewModal.css';
 
 function ReviewModal({ spotId, onClose, onReviewSubmit }) {
   const [comment, setComment] = useState('');
@@ -45,15 +46,15 @@ function ReviewModal({ spotId, onClose, onReviewSubmit }) {
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
       <form onSubmit={handleSubmit}>
-        <textarea
+        <textarea className="reviewtextarea"
           placeholder="Leave your review here..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           required
         />
         <div>
-          <label>Stars:</label>
-          <select value={rating} onChange={(e) => setRating(Number(e.target.value))} required>
+          <label className='reviewlable'>Stars:</label>
+          <select className="input" value={rating} onChange={(e) => setRating(Number(e.target.value))} required>
             <option value="">Select a rating</option>
             {[1, 2, 3, 4, 5].map(star => (
               <option key={star} value={star}>{star}</option>
@@ -64,7 +65,7 @@ function ReviewModal({ spotId, onClose, onReviewSubmit }) {
           Submit Your Review
         </button>
       </form>
-      <button onClick={onClose}>Close</button>
+      <button className="Close" onClick={onClose}>Close</button>
     </div>
   );
 }

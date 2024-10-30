@@ -23,16 +23,16 @@ const setSpotDetails = (spot) => ({
 
 // Thunk Actions
 export const loadSpots = () => async (dispatch) => {
-  try {
+  // try {
     const response = await fetch('/api/spots');
     if (response.ok) {
       const data = await response.json();
       dispatch(setSpots(data.Spots));
-    } else {
-      console.error('Failed to load spots:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error fetching spots:', error);
+  //   } else {
+  //     console.error('Failed to load spots:', response.statusText);
+  //   }
+  // } catch (error) {
+  //   console.error('Error fetching spots:', error);
   }
 };
 
@@ -52,16 +52,16 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 };
 
 export const loadDetails = (spotId) => async (dispatch) => {
-  try {
+  // try {
     const response = await csrfFetch(`/api/spots/${spotId}`);
     if (response.ok) {
       const spot = await response.json();
       dispatch(setSpotDetails(spot));
-    } else {
-      console.error('Failed to load spot details:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error fetching spot details:', error);
+  //   } else {
+  //     console.error('Failed to load spot details:', response.statusText);
+  //   }
+  // } catch (error) {
+  //   console.error('Error fetching spot details:', error);
   }
 };
 
