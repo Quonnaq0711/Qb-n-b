@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormPageModal';
+import { useNavigate } from 'react-router-dom';
 
  
 
@@ -12,6 +13,7 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setShowMenu((prev) => !prev);
@@ -38,6 +40,10 @@ function ProfileButton({ user }) {
     });
   };
 
+  const handleManageSpotsClick = () => {
+    navigate("/user"); // Navigate to the manage spots page
+  };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -52,6 +58,9 @@ function ProfileButton({ user }) {
               <li>Hello, {user.firstName}</li>
               <li>{user.email}</li>
               <li>
+              <button onClick={handleManageSpotsClick} className="nav-link">
+                    Manage Spots
+                  </button>
                 <button onClick={logout} className="logout-button">Log Out</button>
               </li>
             </>

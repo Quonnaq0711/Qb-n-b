@@ -15,28 +15,27 @@ function LoginFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
+    setErrors({});   
     
-    try {
-      await dispatch(sessionActions.loginUser({ credential, password }));
+      dispatch(sessionActions.loginUser({ credential, password }));
       closeModal();
-    } catch (res) {
-      const data = await res.json();
-      setErrors({ credential: data.errors ? data.errors[0] : "Login failed" });
-    }
+    
+      const data =  response.json();
+      setErrors({ credential: "The provided credentials were invalid"  });
+    
   };
 
-  const handleDemoLogin = async () => {
-    const demoCredentials = { credential: "Demo-lition", password: "password" };
+const handleDemoLogin = () => {
+  const demoCredentials = { credential: "Demo-lition", password: "password" };
+  dispatch(sessionActions.loginUser(demoCredentials))
     
-    try {
-      await dispatch(sessionActions.loginUser(demoCredentials));
-      closeModal();
-    } catch (res) {
-      const data = await res.json();
-      setErrors({ credential: data.errors ? data.errors[0] : "Login failed" });
-    }
-  };
+      closeModal();    
+  
+      const data = response.json();
+      if (data && data.errors) {
+        setErrors(data.errors); 
+      }    
+};
 
   return (
     <div className="modal-container">
@@ -69,3 +68,5 @@ function LoginFormModal() {
 }
 
 export default LoginFormModal;
+
+

@@ -1,4 +1,4 @@
-import { csrfFetch } from "./csrf";
+// import { csrfFetch } from "./csrf";
 import {loadDetails} from "./landingPage";
 
 // Action Types
@@ -37,10 +37,10 @@ const reviewPostErr = (error) => ({
 
 // Thunk Actions 
 export const loadReviews = (spotId) => async (dispatch) => { 
-  const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
+  const response = await fetch(`/api/spots/${spotId}/reviews`);
   if (response.ok) {
       const data = await response.json();
-      console.log('Fetched reviews:', data.Reviews); // Check this output
+      // console.log('Fetched reviews:', data.Reviews); // Check this output
       dispatch(setReviews(data.Reviews || [])); // Use 'data.Reviews' instead of 'data.reviews'
   } else {
       const error = await response.json();
@@ -50,7 +50,7 @@ export const loadReviews = (spotId) => async (dispatch) => {
 
 
 export const createReview = (spotId, reviewData) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+  const response = await fetch(`/api/spots/${spotId}/reviews`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(reviewData),
@@ -72,7 +72,7 @@ export const createReview = (spotId, reviewData) => async (dispatch) => {
 
 
 export const deleteReview = (reviewId, spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+  const response = await fetch(`/api/reviews/${reviewId}`, {
       method: 'DELETE',
   });
 
