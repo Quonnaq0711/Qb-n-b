@@ -22,8 +22,9 @@ module.exports = {
     await spotImage.bulkCreate([
     {
       spotId: 1,
-      url:"https://media.istockphoto.com/id/2155877631/photo/luxury-home-with-charming-roof-on-a-quaint-street-in-encino-ca.webp?a=1&b=1&s=612x612&w=0&k=20&c=ieVJPRZWssYEoN9dJa5BYqgq1skPK9yybnfrAY1i8f0=",
-      preview: true
+        url: "https://media.istockphoto.com/id/2155877631/photo/luxury-home-with-charming-roof-on-a-quaint-street-in-encino-ca.webp?a=1&b=1&s=612x612&w=0&k=20&c=ieVJPRZWssYEoN9dJa5BYqgq1skPK9yybnfrAY1i8f0=",
+        url1: 'https://images.pexels.com/photos/15824906/pexels-photo-15824906/free-photo-of-modern-living-room-interior.jpeg?auto=compress&cs=tinysrgb&w=800',
+        preview: true
     },
     {
       spotId: 2,

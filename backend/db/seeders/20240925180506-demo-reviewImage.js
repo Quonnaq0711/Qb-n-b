@@ -21,7 +21,7 @@ module.exports = {
     await reviewImage.bulkCreate([
       {
         reviewId: 1,
-        url: "image url 1"
+        url: "https://images.pexels.com/photos/15824906/pexels-photo-15824906/free-photo-of-modern-living-room-interior.jpeg?auto=compress&cs=tinysrgb&w=800"
       },
       {
         reviewId: 2,
