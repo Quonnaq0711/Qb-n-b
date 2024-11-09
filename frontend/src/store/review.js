@@ -1,4 +1,5 @@
-// import { csrfFetch } from "./csrf";
+
+import { csrfFetch } from "./csrf";
 import {loadDetails} from "./landingPage";
 
 // Action Types
@@ -50,7 +51,7 @@ export const loadReviews = (spotId) => async (dispatch) => {
 
 
 export const createReview = (spotId, reviewData) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}/reviews`, {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(reviewData),
@@ -72,7 +73,7 @@ export const createReview = (spotId, reviewData) => async (dispatch) => {
 
 
 export const deleteReview = (reviewId, spotId) => async (dispatch) => {
-  const response = await fetch(`/api/reviews/${reviewId}`, {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
       method: 'DELETE',
   });
 

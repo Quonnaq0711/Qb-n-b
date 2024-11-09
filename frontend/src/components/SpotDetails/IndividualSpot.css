@@ -134,14 +134,29 @@
 /* Reviews section */
 .reviews-section {
     margin-top: 20px;
+    flex-direction: column;
+
+    
 }
 
+.container { 
+    display: inline-block;
+    background-color: #4b0082; 
+    color: #ddd;
+    padding: 10px; 
+    border: 1px solid #ccc;
+}
+
+.content { 
+    font-size: 16px;
+}
 .review {
     background-color: #fff;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
 }
 
 .reviewer-name {
@@ -155,6 +170,8 @@
 
 .review-details {
     margin-top: 5px;
+    flex-direction: column;
+
 }
 
 /* Responsive adjustments */

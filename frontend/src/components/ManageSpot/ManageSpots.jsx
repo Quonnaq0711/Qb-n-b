@@ -34,7 +34,7 @@ function ManageSpots() {
 
   const handleUpdate = (spotId) => {
     // Navigate to update page for that spot
-    navigate(`/spots/${spotId}`);
+    navigate(`/spots/${spotId}/edit`);
   };
 
   return (
@@ -50,7 +50,7 @@ function ManageSpots() {
         </div>
       ) : (
         userSpots.map(spot => (
-          <div key={spot.id} className="spot-tile" title={spot.name}>
+          <div key={spot.id} className="spot-tile" name={spot.name}>
             <img src={spot.previewImage} alt={spot.name} />
             <div className="spot-info">
               <div className="location-price-rating">

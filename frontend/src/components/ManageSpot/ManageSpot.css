@@ -43,6 +43,7 @@
   .spot-tile {
     display: flex;
     flex-direction: column;
+    width: 35%;
     border: 1px solid #4b0082;
     background-color: #eef0eb;
     border-radius: 8px;

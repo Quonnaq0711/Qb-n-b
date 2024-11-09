@@ -15,27 +15,37 @@ function LoginFormModal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});   
+    setErrors({});
     
-      dispatch(sessionActions.loginUser({ credential, password }));
-      closeModal();
-    
-      const data =  response.json();
-      setErrors({ credential: "The provided credentials were invalid"  });
-    
+    try {
+      const response = await dispatch(sessionActions.loginUser({ credential, password }));
+      if (response.ok) {
+        closeModal();
+      } else {
+        const data = await response.json();
+        setErrors({ credential: "The provided credentials were invalid" });
+      }
+    } catch (err) {
+      setErrors({ credential: "An error occurred. Please try again." });
+    }
   };
 
-const handleDemoLogin = () => {
-  const demoCredentials = { credential: "Demo-lition", password: "password" };
-  dispatch(sessionActions.loginUser(demoCredentials))
-    
-      closeModal();    
-  
-      const data = response.json();
-      if (data && data.errors) {
-        setErrors(data.errors); 
-      }    
-};
+  const handleDemoLogin = async () => {
+    const demoCredentials = { credential: "Demo-lition", password: "password" };
+    try {
+      const response = await dispatch(sessionActions.loginUser(demoCredentials));
+      if (response.ok) {
+        closeModal();
+      } else {
+        const data = await response.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      }
+    } catch (err) {
+      setErrors({ credential: "An error occurred. Please try again." });
+    }
+  };
 
   return (
     <div className="modal-container">
@@ -68,5 +78,6 @@ const handleDemoLogin = () => {
 }
 
 export default LoginFormModal;
+
 
 

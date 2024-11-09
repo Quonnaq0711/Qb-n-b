@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 export const SET_SPOTS = 'SET_SPOTS';
 export const REMOVE_SPOT = 'REMOVE_SPOT';
 export const SET_SPOT_DETAILS = 'SET_SPOT_DETAILS';
+export const UPDATE_SPOT = 'UPDATE_SPOT';
 
 // Action Creators
 export const setSpots = (spots) => ({
@@ -21,15 +22,17 @@ const setSpotDetails = (spot) => ({
   payload: spot,
 });
 
+const updateSpot = (spot) => ({
+  type: UPDATE_SPOT,
+  payload: spot,
+});
+
 // Thunk Actions
 export const loadSpots = () => async (dispatch) => {
-  
-    const response = await fetch('/api/spots');
-    if (response.ok) {
-      const data = await response.json();
-      dispatch(setSpots(data.Spots));
-  
- 
+  const response = await fetch('/api/spots');
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setSpots(data.Spots));
   }
 };
 
@@ -49,12 +52,24 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 };
 
 export const loadDetails = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}`);
+  if (response.ok) {
+    const spot = await response.json(); 
+    dispatch(setSpotDetails(spot));
+  }
+};
 
-    const response = await csrfFetch(`/api/spots/${spotId}`);
-    if (response.ok) {
-      const spot = await response.json();
-      dispatch(setSpotDetails(spot));
-  
+export const updateDetails = (spotId, updatedSpot) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedSpot), // Send updated data to backend
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(updateSpot(data)); // Dispatch the updated spot after successful response
   }
 };
 
@@ -63,7 +78,6 @@ const initialState = { spots: [], details: null };
 
 // Reducer
 const spotsReducer = (state = initialState, action) => {
-  console.log("Action received:", action);
   switch (action.type) {
     case SET_SPOTS:
       return {
@@ -80,12 +94,21 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         details: action.payload,
       };
+    case UPDATE_SPOT:
+      return {
+        ...state,
+        spots: state.spots.map((spot) =>
+          spot.id === action.payload.id ? action.payload : spot
+        ),
+        details: action.payload, // Also update the details if required
+      };
     default:
       return state;
   }
 };
 
 export default spotsReducer;
+
 
 
 

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './ReviewModal.css';
+// import { csrfFetch } from '../../store/csrf'/;
 
 function ReviewModal({ spotId, onClose, onReviewSubmit }) {
   const [comment, setComment] = useState('');

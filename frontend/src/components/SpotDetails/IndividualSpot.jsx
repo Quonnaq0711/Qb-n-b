@@ -109,9 +109,16 @@ function IndividualSpot() {
           <ul>
             {reviews.map(review => (
               <li key={review.id}>
-                <strong>{review.User.firstName}:
-                </strong> {review.review} 
-                <span className="review-rating"> ★{review.stars}</span>
+                <div className='container'>
+                  <strong>{review.User.firstName}:</strong>
+                </div>
+                <div className='content'>               
+                <div >{review.review}</div>                
+                <span className="review-rating">
+                  <span className='star-icon'>★</span>
+                  {review.stars}</span>
+                <div>{review.createdAt}</div>
+                </div>
               </li>
             ))}
           </ul>
