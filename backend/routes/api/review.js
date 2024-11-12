@@ -118,7 +118,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const spotId = Number(req.params.spotId);   
     const userId = req.user.id;
     
-    if (!review || typeof review !== 'string' || !stars || isNaN(stars) || stars < 1 || stars > 5) {
+    // if (!review || typeof review !== 'string' || !stars || isNaN(stars) || stars < 1 || stars > 5) {
         
     //     const err = new Error("Bad Request");
     //     err.status = 400;
