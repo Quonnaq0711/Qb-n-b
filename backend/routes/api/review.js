@@ -118,17 +118,18 @@ router.post('/:spotId/reviews', requireAuth, async (req, res, next) => {
     const spotId = Number(req.params.spotId);   
     const userId = req.user.id;
     
-    if (!review || typeof review !== 'string' || !stars || isNaN(stars) || stars < 1 || stars > 5) {
+    // if (!review || typeof review !== 'string' || !stars || isNaN(stars) || stars < 1 || stars > 5) {
         
-        const err = new Error("Bad Request");
-        err.status = 400;
-        err.errors = {};
-        if (!review || typeof review !== 'string') err.errors.review = "Review text is required";
-        if (!stars || isNaN(stars) || stars < 1 || stars > 5) {
-            err.errors.stars = "Stars must be an integer from 1 to 5";
-        } 
-        return next(err);
-    }
+    //     const err = new Error("Bad Request");
+    //     err.status = 400;
+    //     err.errors = {};
+    //     if (!review) err.errors.review = "Review text is required";
+    //     if (!stars || isNaN(stars) || stars < 1 || stars > 5) {
+    //         err.errors.stars = "Stars must be an integer from 1 to 5";
+    //     } 
+    //     //  || typeof review !== 'string'
+    //     return next(err);
+    // }
 
     const spot = await Spots.findByPk(req.params.spotId);
     if (!spot) {

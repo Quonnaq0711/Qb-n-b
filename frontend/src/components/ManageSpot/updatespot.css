@@ -1,54 +1,50 @@
-.createspot {
-  /* position: relative; */
-  top: 20px;
-  left: 150px;
-  width: 55%;   
-  padding: 10px;
-  background-color: #b4b8ab; 
-  border-radius: 10px;
-  box-shadow: 0 4px 10px #4b0082;  
-  border: 1px solid  #4b0082;
-  border-radius: 8px;
-
-  cursor: pointer;
-  transition: transform 0.5s;
-  }
+.createspotform {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    width: 50%;  
+    padding: 10px;
+    background-color:#b4b8ab; 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px #4b0082;
+  
+    border: 1px solid  #153243;
+    border-radius: 8px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.5s;
+    }
     
-.createspot h1 {
-    justify-self: center;    
+h1 {
     margin-bottom: 20px; 
-    color: black ; 
+    color: #333; 
   }
   
-  .createspot h2 {
-       
-    margin-bottom: 20px; 
-    color: #333 ; 
-  }
-.createspot label {
+label {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px; 
     font-size: 14px; 
-    color: #333;
+    color: black;
     font-weight: 600; 
   }
   
-  input, textarea {
+  /* input, textarea {
     padding: 10px;
-    border: 1px solid #007bff;
+    border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    width: 95%; 
+    width: 65%; 
     transition: border-color 0.3s;
-  }
+  } */
   
   input:focus {
     border-color: #007bff; 
     outline: none;
   }
   
-  .createspot button {
+  .createspotbutton {
     padding: 10px;
     background-color: #4b0082; 
     color: white;
@@ -59,7 +55,7 @@
     transition: background-color 0.3s;
     width: 65%; 
     margin-top: 10px;
-    margin-left: 70px;
+    justify-content: center;
   }
   
   button:hover {
@@ -71,7 +67,3 @@
     font-size: 14px; 
     margin-top: 10px; 
   } 
-
-
-  
-  

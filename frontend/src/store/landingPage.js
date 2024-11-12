@@ -1,7 +1,11 @@
+import { csrfFetch } from "./csrf"; 
+
 // Action Types
 export const SET_SPOTS = 'SET_SPOTS';
 export const REMOVE_SPOT = 'REMOVE_SPOT';
 export const SET_SPOT_DETAILS = 'SET_SPOT_DETAILS';
+export const UPDATE_SPOT = 'UPDATE_SPOT';
+export const ADD_SPOT = 'ADD_SPOT';
 
 // Action Creators
 export const setSpots = (spots) => ({
@@ -19,24 +23,28 @@ const setSpotDetails = (spot) => ({
   payload: spot,
 });
 
+const updateSpot = (spot) => ({
+  type: UPDATE_SPOT,
+  payload: spot,
+});
+
+const addSpot = (spot) => ({
+  type: ADD_SPOT,
+  payload: spot,
+});
+
 // Thunk Actions
 export const loadSpots = () => async (dispatch) => {
-  try {
-    const response = await fetch('/api/spots');
-    if (response.ok) {
-      const data = await response.json();
-      dispatch(setSpots(data.Spots));
-    } else {
-      console.error('Failed to load spots:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error fetching spots:', error);
+  const response = await fetch('/api/spots');
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(setSpots(data.Spots));
   }
 };
 
 export const deleteSpot = (spotId) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/spots/${spotId}`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
       method: 'DELETE',
     });
     if (response.ok) {
@@ -50,25 +58,45 @@ export const deleteSpot = (spotId) => async (dispatch) => {
 };
 
 export const loadDetails = (spotId) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/spots/${spotId}`);
-    if (response.ok) {
-      const spot = await response.json();
-      dispatch(setSpotDetails(spot));
-    } else {
-      console.error('Failed to load spot details:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error fetching spot details:', error);
+  const response = await fetch(`/api/spots/${spotId}`);
+  if (response.ok) {
+    const spot = await response.json(); 
+    dispatch(setSpotDetails(spot));
   }
 };
+
+export const updateDetails = (spotId, updatedSpot) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedSpot), // Send updated data to backend
+  });
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(updateSpot(data)); // Dispatch the updated spot after successful response
+  }
+};
+
+export const createSpot = (form) => async (dispatch) => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form),
+  });
+  if (response.ok) {
+    const newSpot = await response.json();
+    dispatch(addSpot(newSpot));
+  }
+};
+
 
 // Initial State
 const initialState = { spots: [], details: null };
 
 // Reducer
 const spotsReducer = (state = initialState, action) => {
-  console.log("Action received:", action);
   switch (action.type) {
     case SET_SPOTS:
       return {
@@ -85,12 +113,27 @@ const spotsReducer = (state = initialState, action) => {
         ...state,
         details: action.payload,
       };
+    case UPDATE_SPOT:
+      return {
+        ...state,
+        spots: state.spots.map((spot) =>
+          spot.id === action.payload.id ? action.payload : spot
+        ),
+        details: action.payload, 
+      };
+      case ADD_SPOT:
+        return {
+          ...state,
+          spots: [...state.spots, action.payload],  // Add the new spot to the list
+          details: action.payload,  
+        };
     default:
       return state;
   }
 };
 
 export default spotsReducer;
+
 
 
 

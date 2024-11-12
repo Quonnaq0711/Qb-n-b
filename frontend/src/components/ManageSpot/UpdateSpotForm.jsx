@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";  // Add useDispatch hook to dispatch actions
-import { createSpot, loadSpots } from "../../store/landingPage";  // Assuming your createSpot action is defined here
-import './createspot.css';
+//Update A Spot//
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import './updatespot.css';
+import { loadDetails, updateDetails } from '../../store/landingPage';  // Assuming loadDetails is an action to fetch spot details
+import { useDispatch, useSelector } from 'react-redux';
 
-function CreateASpot() {
-  const dispatch = useDispatch();  // Initialize dispatch
+function UpdateSpot() {
+  const { spotId } = useParams(); // Get the spot ID from the URL
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const spotDetails = useSelector(state => state.spots.details); // Get spot details from the store
+
   const [form, setForm] = useState({
     country: '',
     streetAddress: '',
@@ -14,12 +18,34 @@ function CreateASpot() {
     state: '',
     neighborhood: '',
     description: '',
-    title: '',
+    name: '',
     price: '',
     previewImageUrl: '',
     imageUrls: ['', '', '', ''],
   });
-  const [errors, setErrors] = useState({});
+  const [errors, ] = useState({});
+
+  useEffect(() => {
+    dispatch(loadDetails(spotId)); // Dispatch to load the details of the spot by its ID
+  }, [dispatch, spotId]);
+
+  // Set form data when spotDetails are fetched
+  useEffect(() => {
+    if (spotDetails) {
+      setForm({
+        country: spotDetails.country || '',
+        streetAddress: spotDetails.streetAddress || '',
+        city: spotDetails.city || '',
+        state: spotDetails.state || '',
+        neighborhood: spotDetails.neighborhood || '',
+        description: spotDetails.description || '',
+        name: spotDetails.name || '',
+        price: spotDetails.price || '',
+        previewImageUrl: spotDetails.previewImageUrl || '',
+        imageUrls: spotDetails.imageUrls || ['', '', '', ''],
+      });
+    }
+  }, [spotDetails]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,44 +64,22 @@ function CreateASpot() {
     });
   };
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!form.previewImageUrl) newErrors.previewImageUrl = "Preview Image URL is required";
-    if (!form.price) newErrors.price = "Price per night is required";
-    if (form.description.length < 30) newErrors.description = "Description needs 30 or more characters";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
-  useEffect(() => {
-    dispatch(loadSpots())
-  }, [dispatch]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      try {
-        // Dispatch the createSpot action and wait for the response
-        const spotData = await dispatch(createSpot(form));
-
-        // Assuming the response has the new spot data including its ID
-        if (spotData && spotData.id) {
-          navigate(`/spots/${spotData.id}`);  // Navigate to the newly created spot's detail page
-        }
-      } catch (err) {
-        console.error("Error creating spot:", err);
-        // Optionally handle error if spot creation fails
-      }
-    }
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();   
+      dispatch(updateDetails(spotId, form));
+      console.log('UpdatedData', form)
+      navigate(`/spots/${spotId}`); // Optionally navigate to the spot's detail page
+};
 
   return (
-    <div className="createspot">
-      <h1>Create a New Spot</h1>
+    <div className="createspotform">
+      <h1>Update your Spot</h1>
       <form onSubmit={handleSubmit}>
         <section>
-          <h2>Where is your place located?</h2>
-          <p>Guests will only get your exact address once they have booked a reservation.</p>
+          <h2>Where’s your place located?</h2>
+          <p>Guests will only get your exact address once they’ve booked a reservation.</p>
           <input
             type="text"
             name="country"
@@ -122,19 +126,17 @@ function CreateASpot() {
 
         <section>
           <h2>Create a title for your spot</h2>
-          <p>Catch guests attention with a spot title that highlights what makes your place special.</p>
           <input
             type="text"
-            name="title"
+            name="name"
             placeholder="Name of your spot"
-            value={form.title}
+            value={form.name}
             onChange={handleChange}
           />
         </section>
 
         <section>
           <h2>Set a base price for your spot</h2>
-          <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
           <input
             type="number"
             name="price"
@@ -147,7 +149,6 @@ function CreateASpot() {
 
         <section>
           <h2>Liven up your spot with photos</h2>
-          <p>Submit a link to at least one photo to publish your spot.</p>
           <input
             type="text"
             name="previewImageUrl"
@@ -167,10 +168,11 @@ function CreateASpot() {
           ))}
         </section>
 
-        <button type="submit">Create Spot</button>
+        <button className="createspotbutton" type="submit">Update Spot</button>
       </form>
     </div>
   );
 }
 
-export default CreateASpot;
+export default UpdateSpot;
+

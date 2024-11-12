@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom'; 
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
@@ -11,10 +11,11 @@ import './Nav.css';
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
-  return (
+return (
     <nav className="navbar">
       <div className="logo">
         <NavLink to="/" aria-label="Home">
@@ -56,7 +57,7 @@ function Navigation({ isLoaded }) {
                         modalComponent={<SignupFormModal />}
                         aria-label="Sign Up"
                       />
-                    </li>
+                    </li>                   
                   </ul>
                 )}
               </li>
@@ -69,6 +70,7 @@ function Navigation({ isLoaded }) {
 }
 
 export default Navigation;
+
 
 
 

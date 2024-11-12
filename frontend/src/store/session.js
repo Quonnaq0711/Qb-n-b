@@ -1,16 +1,21 @@
 import { csrfFetch } from "./csrf";
 
-const setUser = (user) =>({
-    type: SET_USER,
-    payload: user,
-})
-export const SET_USER = 'SET_USER';
 
-const removeUser = () => ({
-    type: REMOVE_USER,
-})
+// Action Types
+export const SET_USER = 'SET_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 
+//Action Creators
+const setUser = (user) => ({
+  type: SET_USER,
+  payload: user,
+});
+
+const removeUser = () => ({
+  type: REMOVE_USER,
+});
+
+//Thunk
 export const loginUser = (userData) => async (dispatch) => {
     const response = await csrfFetch('/api/session', {
         method: 'POST',
@@ -54,8 +59,11 @@ export const logoutUser = () => async (dispatch) => {
   return response;
 };
 
+//Initial State
 const initialState = {user: null,};
   
+
+// Reducer
 const sessionReducer = (state = initialState, action) => {
     switch (action.type) {
       case SET_USER: 
