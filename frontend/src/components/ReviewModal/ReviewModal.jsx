@@ -1,48 +1,66 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createReview } from '../../store/review';
+import { useNavigate } from 'react-router-dom';
 import './ReviewModal.css';
-// import { csrfFetch } from '../../store/csrf'/;
 
-function ReviewModal({ spotId, onClose, onReviewSubmit }) {
+function ReviewModal({ spotId, onClose }) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const currentUser = useSelector(state => state.session.user);
+  const modal = useRef(null);
+
+  // Close modal when clicking outside
+  useEffect(() => {
+    const outsideClick = (e) => {
+      if (modal.current && !modal.current.contains(e.target)) {
+        onClose();
+      }
+    };
+  
+    document.addEventListener('mousedown', outsideClick);
+  
+    return () => {
+      document.removeEventListener('mousedown', outsideClick);
+    };
+  }, [onClose]); // Cleanup effect on unmount or when onClose changes
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+
+    // validate comment and rating before dispatching
+    if (comment.length < 10 || !rating) {
+      setError('Please provide a comment with at least 10 characters and a rating.');
+      return;
+    }
+
+    // Dispatching the review with comment and rating
+    const reviewData = {
+      firstName: currentUser.firstName,
+      review: comment, 
+      stars: rating,
+    };
 
     try {
-      const response = await fetch(`/api/spots/${spotId}/reviews`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ comment, rating }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        setError(errorData.message || 'Server error.');
-        return;
-      }
-
-      const newReview = await response.json();
-      onReviewSubmit(newReview);
+      await dispatch(createReview(spotId, reviewData)); // Pass the review data here
       setSuccess('Review submitted successfully!');
-
-      // Clear form
-      setComment('');
+      setError('');
+      setComment(''); 
       setRating(null);
-      
-      // Clear success message after a few seconds
-      setTimeout(() => setSuccess(''), 3000);
-    } catch {
-      setError('Network error. Please try again later.');
+      navigate(`/spots/${spotId}`);
+    } catch (err) {
+      setError('Failed to submit review. Please try again.');
     }
   };
 
   return (
-    <div className="modal-container">
+    <div className="review-container">
       <h2>How was your stay?</h2>
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
@@ -55,7 +73,7 @@ function ReviewModal({ spotId, onClose, onReviewSubmit }) {
         />
         <div>
           <label className='reviewlable'>Stars:</label>
-          <select className="input" value={rating} onChange={(e) => setRating(Number(e.target.value))} required>
+          <select className="input" value={rating || ''} onChange={(e) => setRating(Number(e.target.value))} required>
             <option value="">Select a rating</option>
             {[1, 2, 3, 4, 5].map(star => (
               <option key={star} value={star}>{star}</option>

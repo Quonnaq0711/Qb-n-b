@@ -6,7 +6,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormPageModal';
 import { useNavigate } from 'react-router-dom';
-
+import './ProfileButton.css';
  
 
 function ProfileButton({ user }) {
@@ -37,6 +37,7 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logoutUser()).then(() => {
       setShowMenu(false); 
+      navigate('/');
     });
   };
 
@@ -55,7 +56,7 @@ function ProfileButton({ user }) {
         <ul className={ulClassName}>
           {user ? (
             <>
-              <li>Hello, {user.firstName}</li>
+              <li className='userId'>Hello, {user.firstName}</li>
               <li>{user.email}</li>
               <li>
               <button onClick={handleManageSpotsClick} className="nav-link">

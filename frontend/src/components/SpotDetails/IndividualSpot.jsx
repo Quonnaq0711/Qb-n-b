@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadDetails, loadSpots } from '../../store/landingPage';
-import { loadReviews } from '../../store/review';
+import { deleteReview, loadReviews } from '../../store/review';
 import ReviewModal from '../ReviewModal/ReviewModal';
 import { useParams } from 'react-router-dom';
+import DeleteReview from '../ManageSpot/DeleteReview';
 import './IndividualSpot.css';
 
 function IndividualSpot() {
@@ -11,6 +12,7 @@ function IndividualSpot() {
   const { spotId } = useParams();
   const [error, setError] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null); 
 
   const individualSpot = useSelector(state => state.spots.details);
   const reviews = useSelector(state => state.reviews.reviews);
@@ -46,6 +48,22 @@ function IndividualSpot() {
     setModalOpen(false);
   };
 
+   // Open the confirmation modal 
+   const openDeleteModal = (spotId) => { 
+    setModalContent( <DeleteReview spotId={spotId} 
+    onDeleteConfirm={() => handleDelete(spotId)} 
+    onClose={() => setModalContent(null)} /> );
+ };  
+
+ const handleDelete = async (reviewId) => {
+  try {
+    await dispatch(deleteReview(reviewId)); // Dispatch the delete action
+  } catch (error) {
+    console.error("Failed to delete the review:", error);
+    alert("There was an error deleting the review. Please try again.");
+  }
+ };
+  
   return (
     <div className="spot-details-page">
       <h2 className="spot-name">{individualSpot.name}</h2>
@@ -105,6 +123,9 @@ function IndividualSpot() {
         {currentUser && !isOwner && !hasReviewed && (
           <button onClick={() => setModalOpen(true)}>Post Your Review</button>
         )}
+        {currentUser && !isOwner && hasReviewed && (
+          <button onClick={() => openDeleteModal(reviews.id)} className="delete-button">Delete</button>
+        )}
         {Array.isArray(reviews) && reviews.length > 0 ? (
           <ul>
             {reviews.map(review => (
@@ -133,26 +154,9 @@ function IndividualSpot() {
           onReviewSubmit={handleReviewSubmit}
         />
       )}
-    </div>
-  );
+      {modalContent}
+    </div>    
+  );  
 }
 
 export default IndividualSpot;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

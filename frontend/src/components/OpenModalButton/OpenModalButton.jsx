@@ -12,6 +12,7 @@ function OpenModalButton({
     if (onModalClose) setOnModalClose(onModalClose);
     setModalContent(modalComponent);
     if (typeof onButtonClick === "function") onButtonClick();
+    if (setModalContent) setOnModalClose()
   };
 
   return <button onClick={onClick}>{buttonText}</button>;

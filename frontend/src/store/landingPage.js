@@ -5,6 +5,7 @@ export const SET_SPOTS = 'SET_SPOTS';
 export const REMOVE_SPOT = 'REMOVE_SPOT';
 export const SET_SPOT_DETAILS = 'SET_SPOT_DETAILS';
 export const UPDATE_SPOT = 'UPDATE_SPOT';
+export const ADD_SPOT = 'ADD_SPOT';
 
 // Action Creators
 export const setSpots = (spots) => ({
@@ -24,6 +25,11 @@ const setSpotDetails = (spot) => ({
 
 const updateSpot = (spot) => ({
   type: UPDATE_SPOT,
+  payload: spot,
+});
+
+const addSpot = (spot) => ({
+  type: ADD_SPOT,
   payload: spot,
 });
 
@@ -73,6 +79,19 @@ export const updateDetails = (spotId, updatedSpot) => async (dispatch) => {
   }
 };
 
+export const createSpot = (form) => async (dispatch) => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(form),
+  });
+  if (response.ok) {
+    const newSpot = await response.json();
+    dispatch(addSpot(newSpot));
+  }
+};
+
+
 // Initial State
 const initialState = { spots: [], details: null };
 
@@ -100,8 +119,14 @@ const spotsReducer = (state = initialState, action) => {
         spots: state.spots.map((spot) =>
           spot.id === action.payload.id ? action.payload : spot
         ),
-        details: action.payload, // Also update the details if required
+        details: action.payload, 
       };
+      case ADD_SPOT:
+        return {
+          ...state,
+          spots: [...state.spots, action.payload],  // Add the new spot to the list
+          details: action.payload,  
+        };
     default:
       return state;
   }

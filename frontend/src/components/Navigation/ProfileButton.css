@@ -1,7 +1,8 @@
 /* ProfileButton.css */
 
-/* .user-menu {
+ .user-menu {
     position: relative;
+    
   }
   
   .user-menu-button {
@@ -15,21 +16,24 @@
   .profile-dropdown {
     position: absolute;
     top: 100%;
-    right: 0; 
-    background-color: #fff;
+    right: 0;     
+    background-color: #153243;
     border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px  #4b0082;
     z-index: 1000;
     padding: 10px;
+    
   }
   
   .profile-dropdown li {
     margin: 5px 0;
-    color: #333; 
+    color: #eef0eb; 
+    font-size: x-large;
+    justify-items: space-between;
   }
   
   .logout-button {
-    background-color: #d9534f; 
+    
     color: white;
     border: none;
     border-radius: 4px;
@@ -45,4 +49,7 @@
   .hidden {
     display: none;
   }
-   */
+   
+  /* .ulClassName {
+    flex-direction: row;
+  } */

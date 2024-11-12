@@ -1,34 +1,37 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { deleteSpot, loadSpots } from '../../store/landingPage';
-import './ManageSpot.css';
-import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'; 
+import { useNavigate } from 'react-router-dom'; 
+import { deleteSpot, loadSpots } from '../../store/landingPage'; 
+import { useEffect, useState } from 'react'; 
+import DeleteModal from './DeleteSpot'; 
+import './ManageSpot.css'; 
 
-function ManageSpots() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const sessionUser = useSelector(state => state.session.user);
+function ManageSpots() { 
+  const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
+  const sessionUser = useSelector(state => state.session.user); 
   const spots = useSelector(state => state.spots.spots); 
-
-  // Filter spots to only include those created by the current user
-  const userSpots = spots.filter(spot => spot.ownerId === sessionUser.id);
-
-  // Load spots when the component mounts
-  useEffect(() => {
-    dispatch(loadSpots());
-  }, [dispatch]);
+  
+  // Filter spots to only include those created by the current user 
+  const userSpots = spots.filter(spot => spot.ownerId === sessionUser.id); 
+  const [modalContent, setModalContent] = useState(null); 
+  
+  // Load spots when the component mounts 
+  useEffect(() => { dispatch(loadSpots());
+   }, [dispatch]); 
+   
+   // Open the confirmation modal 
+   const openDeleteModal = (spotId) => { 
+    setModalContent( <DeleteModal spotId={spotId} 
+    onDeleteConfirm={() => handleDelete(spotId)} 
+    onClose={() => setModalContent(null)} /> );
+ };  
 
   const handleDelete = async (spotId) => {
-    // Confirm deletion with the user
-    const confirmed = window.confirm("Are you sure you want to delete this spot? This action cannot be undone.");
-    if (confirmed) {
-      try {
-        // Dispatch delete action to remove the spot
-        await dispatch(deleteSpot(spotId));
-      } catch (error) {
-        console.error("Failed to delete the spot:", error);
-        alert("There was an error deleting the spot. Please try again.");
-      }
+    try {
+      await dispatch(deleteSpot(spotId)); // Dispatch the delete action
+    } catch (error) {
+      console.error("Failed to delete the spot:", error);
+      alert("There was an error deleting the spot. Please try again.");
     }
   };
 
@@ -67,16 +70,18 @@ function ManageSpots() {
 
             <div className="spot-actions">
               <button onClick={() => handleUpdate(spot.id)} className="update-button">Update</button>
-              <button onClick={() => handleDelete(spot.id)} className="delete-button">Delete</button>
+              <button onClick={() => openDeleteModal(spot.id)} className="delete-button">Delete</button>
             </div>
           </div>
         ))
       )}
+      {modalContent}
     </div>
   );
 }
 
 export default ManageSpots;
+
 
 
 

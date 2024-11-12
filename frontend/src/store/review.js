@@ -25,10 +25,7 @@ const removeReview = (reviewId) => ({
   reviewId
 });
 
-// const reviewPostOK = (newReview) => ({
-//   type: REVIEW_POST_OK,
-//   payload: newReview,
-// });
+
 
 const reviewPostErr = (error) => ({
   type: REVIEW_POST_ERR,
@@ -54,22 +51,22 @@ export const createReview = (spotId, reviewData) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(reviewData),
+    body: JSON.stringify(reviewData), // Send review data correctly
   });
 
   if (response.ok) {
-    const newReview = await response.json();    
+    const newReview = await response.json();
     dispatch(addReview(newReview)); // Dispatch the new review to the store
-    dispatch(loadReviews(spotId));
-    dispatch(loadDetails(spotId));
-   
+    dispatch(loadReviews(spotId)); // Reload reviews for the spot
+    dispatch(loadDetails(spotId)); // Optionally reload spot details
     return newReview;
   } else {
     const error = await response.json();
     dispatch(reviewPostErr(error));
-    throw error;
+    throw error; // Throw error to handle in component
   }
 };
+
 
 
 export const deleteReview = (reviewId, spotId) => async (dispatch) => {
