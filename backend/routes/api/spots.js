@@ -247,7 +247,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 //Create a Spot
 router.post('/', requireAuth, async (req, res, next) => {
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const { address, city, state, country, lat, lng, name, description, price,  previewImageUrl, imageUrls } = req.body;
     const ownerId = req.user.id;
 // !lat || !lng ||
     // if (!address || !city || !state || !country || !name || !description || !price ) {
@@ -264,10 +264,10 @@ router.post('/', requireAuth, async (req, res, next) => {
     //     if (!description) err.errors.description = "Description is required";
     //     if (!price || price <= 0) err.errors.price = "Price per day must be a positive number";
     //     return next(err);
-    // }    
+    // }     lat, lng,
     
         const createSpot = await Spots.create({
-            ownerId, address, city, state, country, lat, lng, name, description, price
+            ownerId, address, city, state, country, name, description, price, previewImageUrl, imageUrls
         });
         res.status(201).json(createSpot);
     
