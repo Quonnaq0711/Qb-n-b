@@ -38,6 +38,7 @@ function IndividualSpot() {
 
   const hasReviewed = Array.isArray(reviews) && reviews.some(review => review.userId === currentUser?.id);
   const isOwner = currentUser?.id === individualSpot?.Owner?.id;
+  // const comment = individualSpot?.reviews?.some(review => review.userId === currentUser?.id);
 
   const handleReserveClick = () => {
     alert("Feature coming soon...");
@@ -57,7 +58,7 @@ function IndividualSpot() {
 
  const handleDelete = async (reviewId) => {
   try {
-    await dispatch(deleteReview(reviewId)); // Dispatch the delete action
+    await dispatch(deleteReview(reviewId, spotId)); // Dispatch the delete action
   } catch (error) {
     console.error("Failed to delete the review:", error);
     alert("There was an error deleting the review. Please try again.");
@@ -120,12 +121,9 @@ function IndividualSpot() {
       <hr className="divider" />
       <div className="reviews-section">
         <h3>Reviews</h3>        
-        {currentUser && !isOwner && !hasReviewed && (
+        {currentUser && !isOwner && !isOwner && !hasReviewed && (
           <button onClick={() => setModalOpen(true)}>Post Your Review</button>
-        )}
-        {currentUser && !isOwner && hasReviewed && (
-          <button onClick={() => openDeleteModal(reviews.id)} className="delete-button">Delete</button>
-        )}
+        )}        
         {Array.isArray(reviews) && reviews.length > 0 ? (
           <ul>
             {reviews.map(review => (
@@ -138,7 +136,10 @@ function IndividualSpot() {
                 <span className="review-rating">
                   <span className='star-icon'>★</span>
                   {review.stars}</span>
-                <div>{review.createdAt}</div>
+                  <div>{review.createdAt}</div>
+                  {currentUser && !isOwner && review.userId === currentUser.id && (
+          <button onClick={() => openDeleteModal(review.id)} className="reviewDelete-button">Delete</button>
+        )}
                 </div>
               </li>
             ))}

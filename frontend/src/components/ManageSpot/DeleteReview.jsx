@@ -1,29 +1,28 @@
 import { useEffect, useRef } from 'react';
-import { useModal } from '../../context/modal';  // Assuming you have a Modal context
 import './deleteModal.css';
 
+
 function DeleteReview({ reviewId, onDeleteConfirm, onClose }) {
-    const { closeModal } = useModal();
-    const modal = useRef(null);
+  const modal = useRef(null);
     
-    useEffect(() => {
-        const outsideClick = (e) => {
+  useEffect(() => {
+    const outsideClick = (e) => {
             if (modal.current && !modal.current.contains(e.target)) {
-              closeModal();
+              onClose();
             }
-          };
-        
+          };        
           document.addEventListener('mousedown', outsideClick);
         
           return () => {
             document.removeEventListener('mousedown', outsideClick);
           };
-        }, [closeModal]); 
+        }, [onClose]); 
 
 
   const handleConfirmDelete = () => {
     onDeleteConfirm(reviewId);
-    closeModal();  // Close the modal after confirming
+    onClose();  // Close the modal after confirming
+    
   };
 
   return (

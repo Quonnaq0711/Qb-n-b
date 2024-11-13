@@ -6,6 +6,7 @@ export const REMOVE_SPOT = 'REMOVE_SPOT';
 export const SET_SPOT_DETAILS = 'SET_SPOT_DETAILS';
 export const UPDATE_SPOT = 'UPDATE_SPOT';
 export const ADD_SPOT = 'ADD_SPOT';
+export const ADD_IMAGE = 'ADD_IMAGE';
 
 // Action Creators
 export const setSpots = (spots) => ({
@@ -31,6 +32,12 @@ const updateSpot = (spot) => ({
 const addSpot = (spot) => ({
   type: ADD_SPOT,
   payload: spot,
+});
+
+const addImage = (spotId, image) => ({
+  type: ADD_IMAGE,
+  spotId,
+  image,
 });
 
 // Thunk Actions
@@ -79,18 +86,43 @@ export const updateDetails = (spotId, updatedSpot) => async (dispatch) => {
   }
 };
 
-export const createSpot = (form) => async (dispatch) => {
+export const createASpot = (createSpot) => async (dispatch) => {
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(form),
+    body: JSON.stringify(createSpot),
+    
   });
+  console.log("DATA", createSpot)
   if (response.ok) {
     const newSpot = await response.json();
-    dispatch(addSpot(newSpot));
+    dispatch(addSpot(newSpot)); // Add the new spot to the store
   }
+  
+
 };
 
+export const addSpotImage = (spotId, imageUrl, isPreview) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}/images`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          url: imageUrl,
+          preview: isPreview,
+      }),
+  });
+
+  if (response.ok) {
+      const image = await response.json();
+      dispatch(addImage(spotId, image));
+      return image;
+  } else {
+      const errors = await response.json();
+      return errors;
+  }
+};
 
 // Initial State
 const initialState = { spots: [], details: null };
@@ -122,11 +154,21 @@ const spotsReducer = (state = initialState, action) => {
         details: action.payload, 
       };
       case ADD_SPOT:
-        return {
-          ...state,
-          spots: [...state.spots, action.payload],  // Add the new spot to the list
-          details: action.payload,  
-        };
+  return {
+    ...state,
+    spots: [...state.spots, action.payload],  // Add the new spot to the list
+    details: action.payload,  // Set the details to the new spot
+  };
+  case ADD_IMAGE: {
+    return {
+      ...state,
+      spots: state.spots.map(spot =>
+        spot.id === action.spotId
+          ? { ...spot, images: [...spot.images, action.image] }
+          : spot
+      ),
+    };
+  }  
     default:
       return state;
   }

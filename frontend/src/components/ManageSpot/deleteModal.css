@@ -1,49 +1,48 @@
 .modal-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #4b0082;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-  
-  .modal-container {
-    background-color: #b4b8ab;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    
-  }
-  
-  .modal-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: space-evenly;
-  }
-  
-  button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .delete-button {
-    background-color: red;
-    color: white;
-    border: none;
-  }
-  
-  .cancel-button {
-    background-color: #333;
-    color: white;
-    border: none;
-  }
-  
-  button:hover {
-    opacity: 0.8;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: #b4b8ab;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+}
+
+.cancel-button {
+  background-color: darkslategrey;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  opacity: 0.8;
+}
