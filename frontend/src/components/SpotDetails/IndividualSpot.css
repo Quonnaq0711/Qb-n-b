@@ -172,6 +172,12 @@
 
 }
 
+.reviewDelete-button {
+    width: 15%;
+    background-color: red;
+    margin-bottom: 10px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
     .details-container {

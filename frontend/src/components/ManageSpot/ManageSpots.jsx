@@ -14,30 +14,47 @@ function ManageSpots() {
   // Filter spots to only include those created by the current user 
   const userSpots = spots.filter(spot => spot.ownerId === sessionUser.id); 
   const [modalContent, setModalContent] = useState(null); 
-  
-  // Load spots when the component mounts 
-  useEffect(() => { dispatch(loadSpots());
-   }, [dispatch]); 
-   
-   // Open the confirmation modal 
-   const openDeleteModal = (spotId) => { 
-    setModalContent( <DeleteModal spotId={spotId} 
-    onDeleteConfirm={() => handleDelete(spotId)} 
-    onClose={() => setModalContent(null)} /> );
- };  
 
-  const handleDelete = async (spotId) => {
+  // Load spots when the component mounts 
+  useEffect(() => { 
+    dispatch(loadSpots());
+  }, [dispatch]); 
+  
+  // Open the confirmation modal 
+  const openDeleteModal = (spotId, event) => { 
+    event.stopPropagation(); // Prevent the event from bubbling
+    setModalContent(
+      <DeleteModal 
+        spotId={spotId} 
+        onDeleteConfirm={() => handleDelete(spotId)} 
+        onClose={() => setModalContent(null)} 
+      />
+    );
+  };
+
+  const handleDelete = async (spotId, event) => {
+    event.stopPropagation(); // Prevent the event from bubbling
     try {
       await dispatch(deleteSpot(spotId)); // Dispatch the delete action
+      // Optionally, reload spots after deleting
+      dispatch(loadSpots()); 
     } catch (error) {
       console.error("Failed to delete the spot:", error);
       alert("There was an error deleting the spot. Please try again.");
     }
   };
 
-  const handleUpdate = (spotId) => {
-    // Navigate to update page for that spot
+  const handleUpdate = (spotId, event) => {
+    event.stopPropagation(); // Prevent the event from bubbling
     navigate(`/spots/${spotId}/edit`);
+  };
+
+  const handleClick = (spotId) => {
+    navigate(`/spots/${spotId}`)
+  };
+   
+  const handleNoSpot = () => {
+    navigate('/spots')
   };
 
   return (
@@ -46,14 +63,19 @@ function ManageSpots() {
 
       {userSpots.length === 0 ? (
         <div className="no-spots">
-          <p>You dont have any spots yet.</p>
-          <button to="/spots" className="create-new-spot">
+          <p>You don’t have any spots yet.</p>
+          <button onClick={handleNoSpot} className="create-new-spot">
             Create a New Spot
           </button>
         </div>
       ) : (
         userSpots.map(spot => (
-          <div key={spot.id} className="spot-tile" name={spot.name}>
+          <div 
+            key={spot.id} 
+            onClick={() => handleClick(spot.id)} 
+            className="spot-tile" 
+            name={spot.name}
+          >
             <img src={spot.previewImage} alt={spot.name} />
             <div className="spot-info">
               <div className="location-price-rating">
@@ -67,10 +89,13 @@ function ManageSpots() {
                 </div>
               </div>
             </div>
-
             <div className="spot-actions">
-              <button onClick={() => handleUpdate(spot.id)} className="update-button">Update</button>
-              <button onClick={() => openDeleteModal(spot.id)} className="delete-button">Delete</button>
+              <button 
+                onClick={(e) => handleUpdate(spot.id, e)} 
+                className="update-button">Update</button>
+              <button 
+                onClick={(e) => openDeleteModal(spot.id, e)} 
+                className="delete-button">Delete</button>
             </div>
           </div>
         ))
@@ -81,6 +106,8 @@ function ManageSpots() {
 }
 
 export default ManageSpots;
+
+
 
 
 

@@ -1,25 +1,29 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";  // Add useDispatch hook to dispatch actions
-import { createSpot, loadSpots } from "../../store/landingPage";  // Assuming your createSpot action is defined here
+import { useDispatch, useSelector } from "react-redux";
+import { createASpot, setSpots } from "../../store/landingPage"; // Assuming your createSpot action is defined here
 import './createspot.css';
 
 function CreateASpot() {
-  const dispatch = useDispatch();  // Initialize dispatch
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     country: '',
     streetAddress: '',
     city: '',
     state: '',
-    neighborhood: '',
     description: '',
     title: '',
     price: '',
     previewImageUrl: '',
     imageUrls: ['', '', '', ''],
   });
+  const currentUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    dispatch(setSpots()); // Dispatch to load the details of the spot by its ID
+  }, [dispatch]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,6 +44,11 @@ function CreateASpot() {
 
   const validateForm = () => {
     const newErrors = {};
+    if (!form.title) newErrors.title = "Title is required";
+    if (!form.streetAddress) newErrors.streetAddress = "Street Address is required";
+    if (!form.city) newErrors.city = "City is required";
+    if (!form.state) newErrors.state = "State is required";
+    if (!form.country) newErrors.country = "Country is required";
     if (!form.previewImageUrl) newErrors.previewImageUrl = "Preview Image URL is required";
     if (!form.price) newErrors.price = "Price per night is required";
     if (form.description.length < 30) newErrors.description = "Description needs 30 or more characters";
@@ -47,20 +56,28 @@ function CreateASpot() {
     return Object.keys(newErrors).length === 0;
   };
 
-  useEffect(() => {
-    dispatch(loadSpots())
-  }, [dispatch]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      try {
-        // Dispatch the createSpot action and wait for the response
-        const spotData = await dispatch(createSpot(form));
+      const spotData = {
+        ownerId: currentUser.id, // Assuming you have the `currentUser.id`
+        country: form.country,
+        address: form.streetAddress,
+        city: form.city,
+        state: form.state,
+        description: form.description,
+        name: form.title,
+        price: parseInt(form.price, 10),
+        previewImageUrl: form.previewImageUrl,
+        imageUrls: form.imageUrls,
+      };
 
-        // Assuming the response has the new spot data including its ID
-        if (spotData && spotData.id) {
-          navigate(`/spots/${spotData.id}`);  // Navigate to the newly created spot's detail page
+      try {
+        // Dispatch the createSpot action
+        const newSpot = await dispatch(createASpot(spotData));
+
+        if (newSpot && newSpot.id) {
+          navigate(`/spots/${newSpot.id}`); // Navigate to the newly created spot's detail page
         }
       } catch (err) {
         console.error("Error creating spot:", err);
@@ -83,6 +100,7 @@ function CreateASpot() {
             value={form.country}
             onChange={handleChange}
           />
+          {errors.country && <p className="error">{errors.country}</p>}
           <input
             type="text"
             name="streetAddress"
@@ -90,6 +108,7 @@ function CreateASpot() {
             value={form.streetAddress}
             onChange={handleChange}
           />
+          {errors.streetAddress && <p className="error">{errors.streetAddress}</p>}
           <input
             type="text"
             name="city"
@@ -97,6 +116,7 @@ function CreateASpot() {
             value={form.city}
             onChange={handleChange}
           />
+          {errors.city && <p className="error">{errors.city}</p>}
           <input
             type="text"
             name="state"
@@ -104,13 +124,7 @@ function CreateASpot() {
             value={form.state}
             onChange={handleChange}
           />
-          <input
-            type="text"
-            name="neighborhood"
-            placeholder="Neighborhood"
-            value={form.neighborhood}
-            onChange={handleChange}
-          />
+          {errors.state && <p className="error">{errors.state}</p>}
           <textarea
             name="description"
             placeholder="Please write at least 30 characters"
@@ -130,6 +144,7 @@ function CreateASpot() {
             value={form.title}
             onChange={handleChange}
           />
+          {errors.title && <p className="error">{errors.title}</p>}
         </section>
 
         <section>
@@ -174,3 +189,4 @@ function CreateASpot() {
 }
 
 export default CreateASpot;
+

@@ -53,10 +53,11 @@ function ReviewModal({ spotId, onClose }) {
       setError('');
       setComment(''); 
       setRating(null);
-      navigate(`/spots/${spotId}`);
+      
     } catch (err) {
       setError('Failed to submit review. Please try again.');
     }
+    navigate(`/spots/${spotId}`);
   };
 
   return (
