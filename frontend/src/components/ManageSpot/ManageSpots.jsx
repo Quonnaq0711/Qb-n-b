@@ -32,11 +32,10 @@ function ManageSpots() {
     );
   };
 
-  const handleDelete = async (spotId, event) => {
-    event.stopPropagation(); // Prevent the event from bubbling
+  const handleDelete = async (spotId,) => {
+    // event.stopPropagation(); 
     try {
-      await dispatch(deleteSpot(spotId)); // Dispatch the delete action
-      // Optionally, reload spots after deleting
+      await dispatch(deleteSpot(spotId));       
       dispatch(loadSpots()); 
     } catch (error) {
       console.error("Failed to delete the spot:", error);
@@ -45,7 +44,7 @@ function ManageSpots() {
   };
 
   const handleUpdate = (spotId, event) => {
-    event.stopPropagation(); // Prevent the event from bubbling
+    event.stopPropagation(); 
     navigate(`/spots/${spotId}/edit`);
   };
 
@@ -76,7 +75,7 @@ function ManageSpots() {
             className="spot-tile" 
             name={spot.name}
           >
-            <img src={spot.previewImage} alt={spot.name} />
+            <img src={spot.previewImage } alt={spot.name} />
             <div className="spot-info">
               <div className="location-price-rating">
                 <div className="location-price">
@@ -85,7 +84,7 @@ function ManageSpots() {
                 </div>
                 <div className="star-rating">
                   <span className="star-icon">★</span>
-                  {spot.avgRating ? spot.avgRating.toFixed(1) : 'New'}
+                  {spot.avgRating ? spot.avgRating : 'New'}
                 </div>
               </div>
             </div>

@@ -29,15 +29,15 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
     const { url, preview } = req.body;
 
-    const addImage = await spotImage.create({
+    const addAImage = await spotImage.create({
         spotId: spotId,
         url,
         preview
     })
     const response = {
-        id: addImage.id,
-        url: addImage.url,
-        preview: addImage.preview
+        id: addAImage.id,
+        url: addAImage.url,
+        preview: addAImage.preview
     }
     return res.status(201).json(response);
 })

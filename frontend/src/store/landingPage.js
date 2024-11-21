@@ -34,10 +34,10 @@ const addSpot = (spot) => ({
   payload: spot,
 });
 
-const addImage = (spotId, image) => ({
+const addImage = (spotId, url) => ({
   type: ADD_IMAGE,
   spotId,
-  image,
+  url,
 });
 
 // Thunk Actions
@@ -86,43 +86,42 @@ export const updateDetails = (spotId, updatedSpot) => async (dispatch) => {
   }
 };
 
-export const createASpot = (createSpot) => async (dispatch) => {
+export const newSpot = (createSpot) => async (dispatch) => {
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(createSpot),
     
   });
-  console.log("DATA", createSpot)
-  if (response.ok) {
-    const newSpot = await response.json();
-    dispatch(addSpot(newSpot)); // Add the new spot to the store
-  }
-  
 
+  if (response.ok) {
+    const createSpot = await response.json();
+    dispatch(addSpot(createSpot));
+    return createSpot;  // Return new spot to handle navigation or other actions in component
+  
+  } console.log('ACTION', createSpot)
 };
 
-export const addSpotImage = (spotId, imageUrl, isPreview) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}/images`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-          url: imageUrl,
-          preview: isPreview,
-      }),
+export const addSpotImage = (spotId, addAImage) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ url: addAImage }),  // Make sure the URL is wrapped inside an object
   });
 
   if (response.ok) {
-      const image = await response.json();
-      dispatch(addImage(spotId, image));
-      return image;
+    const image = await response.json();
+    dispatch(addImage(spotId, image.previewImageUrl));  // Assuming the image response includes the URL
+    return image;
   } else {
-      const errors = await response.json();
-      return errors;
+    const errors = await response.json();
+    return errors;  // Return error data for handling in the UI
   }
 };
+
+
 
 // Initial State
 const initialState = { spots: [], details: null };
@@ -148,35 +147,34 @@ const spotsReducer = (state = initialState, action) => {
     case UPDATE_SPOT:
       return {
         ...state,
-        spots: state.spots.map((spot) =>
+        spots: state.spots.map(spot =>
           spot.id === action.payload.id ? action.payload : spot
         ),
-        details: action.payload, 
+        details: action.payload,
       };
-      case ADD_SPOT:
-  return {
-    ...state,
-    spots: [...state.spots, action.payload],  // Add the new spot to the list
-    details: action.payload,  // Set the details to the new spot
-  };
-  case ADD_IMAGE: {
-    return {
-      ...state,
-      spots: state.spots.map(spot =>
-        spot.id === action.spotId
-          ? { ...spot, images: [...spot.images, action.image] }
-          : spot
-      ),
-    };
-  }  
+    case ADD_SPOT: {
+      const spotData = {
+        ...action.payload,
+        id: state.spots.length + 1,
+        url: action.payload.url || [],  // Ensure images are initialized as an empty array
+      };
+      return {
+        ...state,
+        spots: [...state.spots, spotData],
+      };
+    }
+    case ADD_IMAGE:
+      return {
+        ...state,
+        spots: state.spots.map(spot =>
+          spot.id === action.spotId
+            ? { ...spot, url: [...spot.url, action.url] }
+            : spot
+        ),
+      };
     default:
       return state;
   }
 };
 
 export default spotsReducer;
-
-
-
-
-

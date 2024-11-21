@@ -71,4 +71,16 @@ router.get('/current', authenticate, async (req, res) => {
 
 
 
+export const createASpot = (createSpot) => async (dispatch) => {
+  const response = await csrfFetch('/api/spots', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(createSpot),
+  });
 
+  if (response.ok) {
+    const newSpot = await response.json();
+    dispatch(addSpot(newSpot));
+    return newSpot;  // Return new spot to handle navigation or other actions in component
+  }
+};

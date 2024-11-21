@@ -8,7 +8,7 @@ const { avgRatings, reviewCount } = require('../../utils/helperfuncs');
 
 //get all spots with avgStars and Preview image
 router.get('/', async (req, res) => {
-    const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    const { page, size, minPrice, maxPrice } = req.query;
 
     const errors = {};
 
@@ -24,27 +24,13 @@ router.get('/', async (req, res) => {
         if (isNaN(pageSize) || pageSize < 1 || pageSize > 20) {
             errors.size = "Size must be a number between 1 and 20";
         }
-    }
-
-    if (minLat && (isNaN(minLat) || Number(minLat) < -90 || Number(minLat) > 90)) {
-        errors.minLat = "Minimum latitude is invalid";
-    }
-    if (maxLat && (isNaN(maxLat) || Number(maxLat) < -90 || Number(maxLat) > 90)) {
-        errors.maxLat = "Maximum latitude is invalid";
-    }
-    if (minLng && (isNaN(minLng) || Number(minLng) < -180 || Number(minLng) > 180)) {
-        errors.minLng = "Minimum longitude is invalid";
-    }
-    if (maxLng && (isNaN(maxLng) || Number(maxLng) < -180 || Number(maxLng) > 180)) {
-        errors.maxLng = "Maximum longitude is invalid";
-    }
+    }    
     if (minPrice && (isNaN(minPrice) || Number(minPrice) < 0)) {
         errors.minPrice = "Minimum price must be greater than or equal to 0";
     }
     if (maxPrice && (isNaN(maxPrice) || Number(maxPrice) < 0)) {
         errors.maxPrice = "Maximum price must be greater than or equal to 0";
     }
-
     if (Object.keys(errors).length) {
         return res.status(400).json({
             message: "Bad Request",
@@ -59,10 +45,6 @@ router.get('/', async (req, res) => {
     const offset = (pageNumber - 1) * limit;
 
     const whereConditions = {};
-    if (minLat) whereConditions.lat = { [Sequelize.Op.gte]: minLat };
-    if (maxLat) whereConditions.lat = { [Sequelize.Op.lte]: maxLat };
-    if (minLng) whereConditions.lng = { [Sequelize.Op.gte]: minLng };
-    if (maxLng) whereConditions.lng = { [Sequelize.Op.lte]: maxLng };
     if (minPrice) whereConditions.price = { [Sequelize.Op.gte]: minPrice };
     if (maxPrice) whereConditions.price = { [Sequelize.Op.lte]: maxPrice };
 
@@ -70,7 +52,7 @@ router.get('/', async (req, res) => {
         where: whereConditions,
         attributes: [
             'id', 'ownerId', 'address', 'city', 'state', 'country', 
-            'lat', 'lng', 'name', 'description', 'price', 
+            'name', 'description', 'price', 
             'createdAt', 'updatedAt',
         ],
         include: [
@@ -103,8 +85,6 @@ router.get('/', async (req, res) => {
             city: spotData.city,
             state: spotData.state,
             country: spotData.country,
-            lat: spotData.lat,
-            lng: spotData.lng,
             name: spotData.name,
             description: spotData.description,
             price: spotData.price,
@@ -140,7 +120,7 @@ router.get('/current', requireAuth, async (req, res) => {
         },
         attributes: [
             'id', 'ownerId', 'address', 'city', 'state', 'country', 
-            'lat', 'lng', 'name', 'description', 'price', 
+            'name', 'description', 'price', 
             'createdAt', 'updatedAt',
         ],
         include: [
@@ -166,8 +146,6 @@ router.get('/current', requireAuth, async (req, res) => {
             city: spotData.city,
             state: spotData.state,
             country: spotData.country,
-            lat: spotData.lat,
-            lng: spotData.lng,
             name: spotData.name,
             description: spotData.description,
             price: spotData.price,
@@ -191,7 +169,7 @@ router.get('/:spotId', async (req, res, next) => {
     const details = await Spots.findByPk(spotId, {
         attributes: [
             'id', 'ownerId', 'address', 'city', 'state', 'country', 
-            'lat', 'lng', 'name', 'description', 'price', 
+            'name', 'description', 'price', 
             'createdAt', 'updatedAt',
         ],
         include: [
@@ -225,8 +203,6 @@ router.get('/:spotId', async (req, res, next) => {
            city: spotData.city,
            state: spotData.state,
            country: spotData.country,
-           lat: spotData.lat,
-           lng: spotData.lng,
            name: spotData.name,
            description: spotData.description,
            price: spotData.price,
@@ -247,27 +223,25 @@ router.get('/:spotId', async (req, res, next) => {
 
 //Create a Spot
 router.post('/', requireAuth, async (req, res, next) => {
-    const { address, city, state, country, lat, lng, name, description, price,  previewImageUrl, imageUrls } = req.body;
+    const { address, city, state, country, name, description, price } = req.body;
     const ownerId = req.user.id;
-// !lat || !lng ||
-    // if (!address || !city || !state || !country || !name || !description || !price ) {
-    //     const err = new Error("Bad Request");
-    //     err.status = 400; 
-    //     err.errors = {};
-    //     if (!address) err.errors.address = "Street address is required";
-    //     if (!city) err.errors.city = "City is required";
-    //     if (!state) err.errors.state = "State is required";
-    //     if (!country) err.errors.country = "Country is required";
-    //     // if (lat < -90 || lat > 90 || !lat) err.errors.lat = "Latitude must be within -90 and 90";
-    //     // if (lng < -180 || lng > 180 || !lng) err.errors.lng = "Longitude must be within -180 and 180";
-    //     if (!name || name.length > 50) err.errors.name = "Name must be less than 50 characters";
-    //     if (!description) err.errors.description = "Description is required";
-    //     if (!price || price <= 0) err.errors.price = "Price per day must be a positive number";
-    //     return next(err);
-    // }     lat, lng,
+// 
+    if (!address || !city || !state || !country || !name || !description || !price ) {
+        const err = new Error("Bad Request");
+        err.status = 400; 
+        err.errors = {};
+        if (!address) err.errors.address = "Street address is required";
+        if (!city) err.errors.city = "City is required";
+        if (!state) err.errors.state = "State is required";
+        if (!country) err.errors.country = "Country is required";
+        if (!name || name.length < 50) err.errors.name = "Name must be less than 50 characters";
+        if (!description) err.errors.description = "Description is required";
+        if (!price || price <= 0) err.errors.price = "Price per day must be a positive number";
+        return next(err);
+    }    
     
         const createSpot = await Spots.create({
-            ownerId, address, city, state, country, name, description, price, previewImageUrl, imageUrls
+            ownerId, address, city, state, country, name, description, price, 
         });
         res.status(201).json(createSpot);
     
@@ -275,7 +249,7 @@ router.post('/', requireAuth, async (req, res, next) => {
 
 //Edit a Spot
 router.put('/:spotId', requireAuth, async (req, res, next) => {
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const { address, city, state, country, name, description, price } = req.body;
 
     const spotId = parseInt(req.params.spotId);
     const userId = req.user.id;
@@ -294,7 +268,7 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
         });
     }
 
-    // if (!address || !city || !state || !country || !lat || !lng || !name || !description || !price) {
+    // if (!address || !city || !state || !country || !name || !description || !price) {
     //     const err = new Error("Bad Request");
     //     err.status = 400; 
     //     err.errors = {};
@@ -302,8 +276,6 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     //     if (!city) err.errors.city = "City is required";
     //     if (!state) err.errors.state = "State is required";
     //     if (!country) err.errors.country = "Country is required";
-    //     if (lat < -90 || lat > 90 || !lat) err.errors.lat = "Latitude must be within -90 and 90";
-    //     if (lng < -180 || lng > 180 || !lng) err.errors.lng = "Longitude must be within -180 and 180";
     //     if (!name || name.length > 50) err.errors.name = "Name must be less than 50 characters";
     //     if (!description) err.errors.description = "Description is required";
     //     if (!price || price <= 0) err.errors.price = "Price per day must be a positive number";
@@ -315,8 +287,6 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
         city, 
         state, 
         country, 
-        lat, 
-        lng, 
         name, 
         description, 
         price
