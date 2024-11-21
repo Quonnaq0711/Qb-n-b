@@ -26,10 +26,11 @@
   }
   
   .profile-dropdown li {
+    flex-direction: column;
     margin: 5px 0;
     color: #eef0eb; 
     font-size: x-large;
-    justify-items: space-between;
+    justify-items: space-around;
   }
   
   .logout-button {
