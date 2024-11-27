@@ -41,7 +41,7 @@ function UpdateSpot() {
         description: spotDetails.description || '',
         name: spotDetails.name || '',
         price: spotDetails.price || '',
-        previewImageUrl: spotDetails.previewImageUrl || '',
+        spotImage: spotDetails.previewImageUrl || '',
         imageUrls: spotDetails.imageUrls || ['', '', '', ''],
       });
     }

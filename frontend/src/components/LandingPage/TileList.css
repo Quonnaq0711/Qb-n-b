@@ -1,6 +1,8 @@
 .tile-list {
     display: flex;
+    flex-direction: center;
     flex-wrap: wrap;
-    padding: 20px;
+    padding: 15px;
+    margin-left: 75px;
   }
   

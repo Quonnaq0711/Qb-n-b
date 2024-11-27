@@ -11,7 +11,7 @@ function Spot({ spot }) {
 
   return (
     <div className="tile" onClick={handleClick}>
-      <img className='img' src={spot.previewImage} />
+      <img className='img' src={spot.previewImage ? spot.previewImage : spot.image} />
       <h4>{spot.name}</h4>
       <div className="tilelocation">
         {spot.city}, {spot.state}, {spot.country}
@@ -31,5 +31,3 @@ function Spot({ spot }) {
 }
 
 export default Spot;
-
-

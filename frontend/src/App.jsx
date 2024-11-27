@@ -10,6 +10,7 @@ import NotFound from './components/NotFound /notfound';
 import ManageSpots from './components/ManageSpot/ManageSpots';
 import UpdateSpot from './components/ManageSpot/UpdateSpotForm';
 import DeleteModal from './components/ManageSpot/DeleteSpot';
+import UpdateReview from './components/ReviewModal/UpdateReview';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: '/spots/:spotId/delete',
         element: <DeleteModal />
+      },
+      {
+        path:'/reviews/:reviewId',
+        element: <UpdateReview />
       },
       {
         path: '*',
