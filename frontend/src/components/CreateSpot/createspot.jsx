@@ -22,7 +22,7 @@ function CreateASpot() {
   });
   const currentUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState({});
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [ setImagePreviews, ] = useState([]);
 
   // Handle changes in form fields
   const handleChange = (e) => {
