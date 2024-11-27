@@ -216,17 +216,17 @@ router.put('/:reviewId', requireAuth, async (req, res, next) => {
         });
     }
    
-    if (!review || typeof review !== 'string' || !stars || isNaN(stars) || stars < 1 || stars > 5) {
+    // if (!review || typeof review !== 'string' || !stars || isNaN(stars) || stars < 1 || stars > 5) {
         
-        const err = new Error("Bad Request");
-        err.status = 400;
-        err.errors = {};
-        if (!review || typeof review !== 'string') err.errors.review = "Review text is required";
-        if (!stars || isNaN(stars) || stars < 1 || stars > 5) {
-            err.errors.stars = "Stars must be an integer from 1 to 5";
-        } 
-        return next(err);
-    }
+    //     const err = new Error("Bad Request");
+    //     err.status = 400;
+    //     err.errors = {};
+    //     if (!review || typeof review !== 'string') err.errors.review = "Review text is required";
+    //     if (!stars || isNaN(stars) || stars < 1 || stars > 5) {
+    //         err.errors.stars = "Stars must be an integer from 1 to 5";
+    //     } 
+    //     return next(err);
+    // }
 
     await updatedReview.update({
         review,
