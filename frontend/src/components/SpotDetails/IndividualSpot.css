@@ -178,6 +178,14 @@
     margin-bottom: 10px;
 }
 
+.updateReview-button {
+    width: 15%;
+    background-color: #4b0082;
+    margin-bottom: 10px;
+    margin-left: 10px;   
+
+}
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
     .details-container {

@@ -12,7 +12,7 @@ function SpotDetailsPage() {
 
   useEffect(() => {
     // Dispatch action to load the spot details
-    dispatch(loadDetails(spotId));
+    dispatch(loadDetails(spotId));    
   }, [dispatch, spotId]);
 
   // If the spot details are not available, show a message

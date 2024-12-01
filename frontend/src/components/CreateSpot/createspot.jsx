@@ -22,6 +22,7 @@ function CreateASpot() {
   });
   const currentUser = useSelector(state => state.session.user);
   const [errors, setErrors] = useState({});
+  const [ setImagePreviews, ] = useState([]);
 
   // Handle changes in form fields
   const handleChange = (e) => {
@@ -35,11 +36,13 @@ function CreateASpot() {
   // Handle image URL changes in the image input fields
   const handleImageChange = (e, index) => {
     const { value } = e.target;
-    setForm((prev) => {
-      const newImageUrls = [...prev.imageUrls];
-      newImageUrls[index] = value;
-      return { ...prev, imageUrls: newImageUrls };
-    });
+    if (isValidImageUrl(value)) {
+      setImagePreviews((prev) => {
+        const newPreviews = [...prev];
+        newPreviews[index] = value;
+        return newPreviews;
+      });
+    }
   };
 
   // Helper function to check for valid image URLs
@@ -68,6 +71,7 @@ function CreateASpot() {
         newErrors[`imageUrls[${index}]`] = `Image ${index + 1} must be a valid image URL`;
       }
     });
+    console.log('?',form.previewImageUrl)
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return false if any errors exist
@@ -76,9 +80,10 @@ function CreateASpot() {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrors({});  // Clear errors before submission
     if (validateForm()) {
       setIsSubmitting(true);  // Disable submit button during submission
-
+  
       const spotData = {
         id: nanoid(),
         ownerId: currentUser.id,
@@ -89,14 +94,22 @@ function CreateASpot() {
         description: form.description,
         name: form.title,
         price: parseInt(form.price, 10),
+        spotImage: form.previewImageUrl,
       };
-   
-
+  
       try {
         const createdSpot = await dispatch(newSpot(spotData));
         if (createdSpot && createdSpot.id) {
-          // Handle image upload if needed
-          await dispatch(addSpotImage(createdSpot.id, form.previewImageUrl, !true));
+          // Handle image upload for preview image
+          await dispatch(addSpotImage(createdSpot.id, form.previewImageUrl, true));
+  
+          // Upload additional images if they are valid
+          for (const imageUrl of form.imageUrls) {
+            if (isValidImageUrl(imageUrl)) {
+              await dispatch(addSpotImage(createdSpot.id, imageUrl));
+            }
+          }
+  
           // Navigate to the new spot page
           navigate(`/spots/${createdSpot.id}`);
         }
@@ -106,7 +119,8 @@ function CreateASpot() {
         setIsSubmitting(false);  // Re-enable submit button
       }
     }
-    };
+  };
+  
 
     return (
       <div className="createspot">

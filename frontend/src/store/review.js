@@ -8,6 +8,7 @@ export const ADD_REVIEW = 'ADD_REVIEW';
 export const REMOVE_REVIEW = 'REMOVE_REVIEW';
 export const REVIEW_POST_OK = 'REVIEW_POST_OK';
 export const REVIEW_POST_ERR = 'REVIEW_POST_ERR';
+export const UPDATE_REVIEW = 'UPDATE_REVIEW'
 
 // Action Creators
 const setReviews = (reviews) => ({
@@ -25,11 +26,14 @@ const removeReview = (reviewId) => ({
   reviewId
 });
 
-
-
 const reviewPostErr = (error) => ({
   type: REVIEW_POST_ERR,
   payload: error,
+});
+
+const updatedReviews = (review) => ({
+  type: UPDATE_REVIEW,
+  payload: review,
 });
 
 
@@ -70,7 +74,7 @@ export const createReview = (spotId, reviewData) => async (dispatch) => {
 
 
 export const deleteReview = (reviewId, spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+  const response = await csrfFetch(`api/reviews/${reviewId}`, {
       method: 'DELETE',
   });
 
@@ -83,6 +87,27 @@ export const deleteReview = (reviewId, spotId) => async (dispatch) => {
       throw error;
   }
 };
+
+export const editReviews = (reviewId, updatedReview) => async (dispatch) => {
+  const response = await csrfFetch(`/reviews/${reviewId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedReview)
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(updatedReviews(data.Reviews))
+  } else {
+    const error = await response.json();
+    dispatch(reviewPostErr(error));
+    throw error;
+  }
+};
+
+
 
 // Initial State
 const initialState = {
@@ -105,14 +130,17 @@ const reviewsReducer = (state = initialState, action) => {
           };
       case REVIEW_POST_ERR:
           return { ...state, error: action.payload };
+          case UPDATE_REVIEW:
+  return {
+    ...state,
+    reviews: state.reviews.map((review) =>
+      review.id === action.payload.id ? action.payload : review
+    ),
+  };
+
       default:
           return state;
   }
 };
 
 export default reviewsReducer;
-
-
-
-
-

@@ -223,7 +223,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 //Create a Spot
 router.post('/', requireAuth, async (req, res, next) => {
-    const { address, city, state, country, name, description, price } = req.body;
+    const { address, city, state, country, name, description, price, previewImage } = req.body;
     const ownerId = req.user.id;
 // 
     if (!address || !city || !state || !country || !name || !description || !price ) {
@@ -241,7 +241,7 @@ router.post('/', requireAuth, async (req, res, next) => {
     }    
     
         const createSpot = await Spots.create({
-            ownerId, address, city, state, country, name, description, price, 
+            ownerId, address, city, state, country, name, description, price, previewImage 
         });
         res.status(201).json(createSpot);
     
@@ -249,7 +249,7 @@ router.post('/', requireAuth, async (req, res, next) => {
 
 //Edit a Spot
 router.put('/:spotId', requireAuth, async (req, res, next) => {
-    const { address, city, state, country, name, description, price } = req.body;
+    const { address, city, state, country, name, description, price, spotImage } = req.body;
 
     const spotId = parseInt(req.params.spotId);
     const userId = req.user.id;
@@ -289,7 +289,8 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
         country, 
         name, 
         description, 
-        price
+        price, 
+        spotImage
     });
     return res.status(200).json(updatedSpot);
 });

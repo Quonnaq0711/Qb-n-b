@@ -5,14 +5,14 @@ import { deleteReview, loadReviews } from '../../store/review';
 import ReviewModal from '../ReviewModal/ReviewModal';
 import { useParams } from 'react-router-dom';
 import DeleteReview from '../ManageSpot/DeleteReview';
+import UpdateReview from '../ReviewModal/UpdateReview';
 import './IndividualSpot.css';
 
 function IndividualSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [error, setError] = useState(null);
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null); 
+  const [modalContent, setModalContent] = useState(null);  // Managing modal content
 
   const individualSpot = useSelector(state => state.spots.details);
   const reviews = useSelector(state => state.reviews.reviews);
@@ -26,10 +26,10 @@ function IndividualSpot() {
         await dispatch(loadDetails(spotId));
         await dispatch(loadReviews(spotId));
       } catch (err) {
-        console.error(err); // Log error for debugging
+        console.error(err);
         setError('Failed to load data. Please try again later.');
       }
-    };   
+    };
     fetchData();
   }, [dispatch, spotId]);
 
@@ -38,7 +38,6 @@ function IndividualSpot() {
 
   const hasReviewed = Array.isArray(reviews) && reviews.some(review => review.userId === currentUser?.id);
   const isOwner = currentUser?.id === individualSpot?.Owner?.id;
-  // const comment = individualSpot?.reviews?.some(review => review.userId === currentUser?.id);
 
   const handleReserveClick = () => {
     alert("Feature coming soon...");
@@ -46,25 +45,39 @@ function IndividualSpot() {
 
   const handleReviewSubmit = () => {
     dispatch(loadReviews(spotId));
-    setModalOpen(false);
+    setModalContent(null);  // Close modal after submitting review
   };
 
-   // Open the confirmation modal 
-   const openDeleteModal = (spotId) => { 
-    setModalContent( <DeleteReview spotId={spotId} 
-    onDeleteConfirm={() => handleDelete(spotId)} 
-    onClose={() => setModalContent(null)} /> );
- };  
+  // const handleUpdateReviewSubmit = () => {
+  //   dispatch(editReviews(reviewId));  // Assuming editReview updates the review
+  //   setModalContent(null);  // Close modal after submitting the update
+  // };
 
- const handleDelete = async (reviewId) => {
-  try {
-    await dispatch(deleteReview(reviewId, spotId)); // Dispatch the delete action
-  } catch (error) {
-    console.error("Failed to delete the review:", error);
-    alert("There was an error deleting the review. Please try again.");
-  }
- };
-  
+  const openUpdateReviewModal = (reviewId) => {
+    setModalContent(<UpdateReview 
+      reviewId={reviewId} 
+      onClose={() => setModalContent(null)}  // Close modal when the update is done
+    />);
+  };
+
+  const openDeleteModal = (reviewId) => {
+    setModalContent(<DeleteReview
+      reviewId={reviewId}
+      onDeleteConfirm={() => handleDelete(reviewId)}
+      onClose={() => setModalContent(null)}  // Close modal when deletion is done
+    />);
+  };
+
+  const handleDelete = async (reviewId) => {
+    try {
+      await dispatch(deleteReview(reviewId, spotId));  // Delete the review
+      setModalContent(null);  // Close modal after deletion
+    } catch (error) {
+      console.error("Failed to delete the review:", error);
+      alert("There was an error deleting the review. Please try again.");
+    }
+  };
+
   return (
     <div className="spot-details-page">
       <h2 className="spot-name">{individualSpot.name}</h2>
@@ -120,26 +133,32 @@ function IndividualSpot() {
       </div>
       <hr className="divider" />
       <div className="reviews-section">
-        <h3>Reviews</h3>        
-        {currentUser && !isOwner && !isOwner && !hasReviewed && (
-          <button onClick={() => setModalOpen(true)}>Post Your Review</button>
-        )}        
+        <h3>Reviews</h3>
+        {currentUser && !isOwner && !hasReviewed && (
+          <button onClick={() => setModalContent(<ReviewModal spotId={spotId} onClose={() => setModalContent(null)} onReviewSubmit={handleReviewSubmit} />)}>
+            Post Your Review
+          </button>
+        )}
         {Array.isArray(reviews) && reviews.length > 0 ? (
           <ul>
             {reviews.map(review => (
               <li key={review.id}>
-                <div className='container'>
+                <div className="container">
                   <strong>{review.User.firstName}:</strong>
                 </div>
-                <div className='content'>               
-                <div >{review.review}</div>                
-                <span className="review-rating">
-                  <span className='star-icon'>★</span>
-                  {review.stars}</span>
+                <div className="content">
+                  <div>{review.review}</div>
+                  <span className="review-rating">
+                    <span className="star-icon">★</span>
+                    {review.stars}
+                  </span>
                   <div>{review.createdAt}</div>
                   {currentUser && !isOwner && review.userId === currentUser.id && (
-          <button onClick={() => openDeleteModal(review.id)} className="reviewDelete-button">Delete</button>
-        )}
+                    <>
+                      <button onClick={() => openDeleteModal(review.id)} className="reviewDelete-button">Delete</button>
+                      <button onClick={() => openUpdateReviewModal(review.id)} className="updateReview-button">Update</button>
+                    </>
+                  )}
                 </div>
               </li>
             ))}
@@ -148,16 +167,9 @@ function IndividualSpot() {
           <div>Be the first to post a review!</div>
         )}
       </div>
-      {isModalOpen && (
-        <ReviewModal
-          spotId={spotId}
-          onClose={() => setModalOpen(false)}
-          onReviewSubmit={handleReviewSubmit}
-        />
-      )}
-      {modalContent}
-    </div>    
-  );  
+      {modalContent} {/* This will render either the ReviewModal or UpdateReview */}
+    </div>
+  );
 }
 
 export default IndividualSpot;

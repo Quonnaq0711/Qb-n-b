@@ -37,7 +37,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     const response = {
         id: addAImage.id,
         url: addAImage.url,
-        preview: addAImage.preview
+        preview: addAImage.preview,
     }
     return res.status(201).json(response);
 })

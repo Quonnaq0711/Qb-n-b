@@ -112,9 +112,9 @@ export const addSpotImage = (spotId, addAImage) => async (dispatch) => {
   });
 
   if (response.ok) {
-    const image = await response.json();
-    dispatch(addImage(spotId, image.previewImageUrl));  // Assuming the image response includes the URL
-    return image;
+    const previewImage = await response.json();
+    dispatch(addImage(spotId, previewImage.url));  // Assuming the image response includes the URL
+    return previewImage;
   } else {
     const errors = await response.json();
     return errors;  // Return error data for handling in the UI
@@ -156,7 +156,8 @@ const spotsReducer = (state = initialState, action) => {
       const spotData = {
         ...action.payload,
         id: state.spots.length + 1,
-        url: action.payload.url || [],  // Ensure images are initialized as an empty array
+        previewImageUrl: action.payload.url ,
+        
       };
       return {
         ...state,
