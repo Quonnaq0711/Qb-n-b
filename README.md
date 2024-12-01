@@ -8,7 +8,6 @@
 
 [frontend-design]:../../frontend/src/Assets/Screenshot%20(99).png 
 
-
 ## Introduction
 
 This is a full-stack solo project built using React, Redux, Express, and SQLite3/PostgreSQL. The application features user authentication, allowing users to sign up, log in, log out, and use a demo user login button for easy access. The app also includes two major CRUD features:
