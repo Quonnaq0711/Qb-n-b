@@ -4,10 +4,10 @@
 
 ## Frontend Design
 
-![frontend-design , frontend-design1]
+![frontend-design]
 
 [frontend-design]:../../frontend/src/Assets/Screenshot%20(99).png 
-[frontend-design1]: ../../frontend/src/Assets/ScreenShot%20(100).png
+
 
 ## Introduction
 
