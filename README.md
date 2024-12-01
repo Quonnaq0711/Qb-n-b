@@ -1,11 +1,114 @@
-# Mod-4-Project
+# Mod-5-Project -Qb-n-b
+
+# Full Stack React, Redux, Express, SQLite3/PostgresQL App
+
+## Frontend Design
+
+![frontend-design , frontend-design1]
+
+[frontend-design]:../../frontend/src/Assets/Screenshot%20(99).png 
+[frontend-design1]: ../../frontend/src/Assets/ScreenShot%20(100).png
+
+## Introduction
+
+This is a full-stack solo project built using React, Redux, Express, and SQLite3/PostgreSQL. The application features user authentication, allowing users to sign up, log in, log out, and use a demo user login button for easy access. The app also includes two major CRUD features:
+
+1. **Spots**: Users can create, read, update, and delete spots.
+2. **Reviews**: Users can create, read, and delete reviews for spots.
+
+The front-end is built with React, Redux (with normalized data), and CSS, while the back-end is powered by Express and SQLite3/PostgreSQL for data storage.
+
+---
+
+## Technologies Used
+
+- **Frontend**:
+  - React: JavaScript library for building user interfaces
+  - Redux: State management for React applications (with normalized data)
+  - CSS: Styling for the front-end user interface
+  
+- **Backend**:
+  - Express: Web framework for Node.js for handling server-side logic
+  - SQLite3 / PostgreSQL: Database for storing user data, spots, and reviews
+  
+- **Authentication**:
+  - Crsf.js : User authentication handling
+
+---
+
+## Features
+
+- **User Authentication**:
+  - Sign Up
+  - Login / Logout
+  - Demo User Login
+  
+- **CRUD Operations**:
+  - **Spots**:
+    - Create, Read, Update, and Delete spots
+  - **Reviews**:
+    - Create, Read, and Delete reviews
+
+---
+
+## Instructions to Launch Locally
+
+### Prerequisites
+
+- **Node.js**: Make sure you have Node.js installed on your machine. You can download it from [here](https://nodejs.org/).
+- **PostgreSQL or SQLite3**: You will need a PostgreSQL or SQLite3 database set up locally.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Quonnaq0711/Mod-5-Project.git
+cd Mod-5-Project
+```
+
+## 2. Install Backend Dependencies
+
+```bash
+cd backend
+npm install
+```
+
+## 3. Install Frontend Dependencies 
+
+```bash
+cd ../fronend
+npm install
+```
+## 4. Run Backend Server
+
+```bash
+cd backend
+npm start
+```
+The backend server will typically run on http://localhost:8000.
+
+## 4. Run Frontend Server
+
+```bash
+cd frontend
+npm run dev
+```
+The frontend server will run on http://localhost:5173.
+
+## 5.  Access the Application
+Once both servers are running, navigate to http://localhost:5173 in your browser to access the app. You can now sign up, log in, and interact with the spots and reviews features.
+
+---
+## Usage
+* Sign Up / Log In: Users can create a new account or log in with existing credentials.
+* Demo User: You can quickly log in with a demo user by clicking the "Demo User Login" button.
+* Spots: Users can create, view, update, and delete spots.
+* Reviews: Users can create, view, and delete reviews for spots.
 
 ## Database Schema Design
 
 ![database-schema]
 
 [database-schema]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/airbnb-db-schema.png
-
 
 ## API Documentation
 
