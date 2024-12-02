@@ -94,20 +94,20 @@ function CreateASpot() {
         description: form.description,
         name: form.title,
         price: parseInt(form.price, 10),
-        spotImage: form.previewImageUrl,
+        spotImage: form.previewImageUrl,  // Assuming this is a string for the preview image
       };
   
       try {
+        // Dispatch action to create the spot
         const createdSpot = await dispatch(newSpot(spotData));
         if (createdSpot && createdSpot.id) {
           // Handle image upload for preview image
           await dispatch(addSpotImage(createdSpot.id, form.previewImageUrl, true));
   
-          // Upload additional images if they are valid
-          for (const imageUrl of form.imageUrls) {
-            if (isValidImageUrl(imageUrl)) {
-              await dispatch(addSpotImage(createdSpot.id, imageUrl));
-            }
+          // Filter out empty image URLs and upload additional images
+          const validImageUrls = form.imageUrls.filter(isValidImageUrl);
+          for (const imageUrl of validImageUrls) {
+            await dispatch(addSpotImage(createdSpot.id, imageUrl, false));
           }
   
           // Navigate to the new spot page
@@ -120,6 +120,7 @@ function CreateASpot() {
       }
     }
   };
+  
   
 
     return (
