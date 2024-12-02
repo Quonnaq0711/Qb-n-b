@@ -19,9 +19,7 @@ function UpdateSpot() {
     neighborhood: '',
     description: '',
     name: '',
-    price: '',
-    previewImageUrl: '',
-    imageUrls: ['', '', '', ''],
+    price: '',    
   });
   const [errors, ] = useState({});
 
@@ -41,8 +39,6 @@ function UpdateSpot() {
         description: spotDetails.description || '',
         name: spotDetails.name || '',
         price: spotDetails.price || '',
-        spotImage: spotDetails.previewImageUrl || '',
-        imageUrls: spotDetails.imageUrls || ['', '', '', ''],
       });
     }
   }, [spotDetails]);
@@ -55,14 +51,15 @@ function UpdateSpot() {
     }));
   };
 
-  const handleImageChange = (e, index) => {
-    const { value } = e.target;
-    setForm((prev) => {
-      const newImageUrls = [...prev.imageUrls];
-      newImageUrls[index] = value;
-      return { ...prev, imageUrls: newImageUrls };
-    });
-  };
+  // const handleImageChange = (e, index) => {
+  //   const { value } = e.target;
+  //   setForm((prev) => {
+  //     const newImageUrls = [...prev.imageUrls];
+  //     newImageUrls[index] = value;
+  //     return { ...prev, imageUrls: newImageUrls };
+  //   });
+  // };
+  
 
 
 
@@ -108,13 +105,6 @@ function UpdateSpot() {
             value={form.state}
             onChange={handleChange}
           />
-          <input
-            type="text"
-            name="neighborhood"
-            placeholder="Neighborhood"
-            value={form.neighborhood}
-            onChange={handleChange}
-          />
           <textarea
             name="description"
             placeholder="Please write at least 30 characters"
@@ -147,14 +137,14 @@ function UpdateSpot() {
           {errors.price && <p className="error">{errors.price}</p>}
         </section>
 
-        <section>
+        {/* <section>
           <h2>Liven up your spot with photos</h2>
           <input
             type="text"
             name="previewImageUrl"
             placeholder="Preview Image URL"
             value={form.previewImageUrl}
-            onChange={handleChange}
+            onChange={handleImageChange}
           />
           {errors.previewImageUrl && <p className="error">{errors.previewImageUrl}</p>}
           {form.imageUrls.map((url, index) => (
@@ -166,7 +156,7 @@ function UpdateSpot() {
               onChange={(e) => handleImageChange(e, index)}
             />
           ))}
-        </section>
+        </section> */}
 
         <button className="createspotbutton" type="submit">Update Spot</button>
       </form>

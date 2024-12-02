@@ -16,12 +16,16 @@ function Navigation({ isLoaded }) {
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
 return (
-    <nav className="navbar">
+  <nav className="navbar">
+    
       <div className="logo">
         <NavLink to="/" aria-label="Home">
-          <img src="./src/Assets/Design2.png" alt="App Logo" />
+          <img src="./src/Assets/Design2.png" alt="Qb-n-b"/>
         </NavLink>
-      </div>
+    </div>
+    <div>
+      <NavLink to='/' className='h1-title'>QB-N-B</NavLink>
+    </div>
       <ul className="nav-links">
         <li>
           <NavLink to="/" className="nav-link">Home</NavLink>

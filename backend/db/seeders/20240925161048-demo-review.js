@@ -54,6 +54,18 @@ module.exports = {
         review: 'decent experience',
         stars: 3,
       },
+      {
+        spotId: 4,
+        userId: 1,
+        review: 'REALLY ENJOYED THIS PLACE AND ALL OF THE QUIET, WARM BREEZE, SUN AND FUNN.... CANT WAIT TO RETURN',
+        stars: 5,
+      },
+      {
+        spotId: 4,
+        userId: 2,
+        review: 'Warm Breeze, Sun and Fun....',
+        stars: 5,
+      },
     ], options)
   },
 

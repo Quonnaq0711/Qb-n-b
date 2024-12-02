@@ -1,15 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editReviews } from '../../store/review';
+import { editReviews, loadReviews } from '../../store/review';
 import './ReviewModal.css';
 
 function UpdateReview({ onClose }) {
-    const { reviewId } = useParams();  // Correct use of useParams to extract reviewId
+    const { reviewId, spotId } = useParams();  // Extract reviewId and spotId from the URL
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    // Find the review by ID
     const review = useSelector(state => state.reviews.reviews.find(r => r.id === parseInt(reviewId))); 
 
     const [reviewForm, setReviewForm] = useState({
@@ -21,6 +19,10 @@ function UpdateReview({ onClose }) {
     const [success, setSuccess] = useState(null);  // For success messages
 
     useEffect(() => {
+        dispatch(loadReviews(spotId));  // Load reviews for the spot
+    }, [dispatch, spotId]);
+
+    useEffect(() => {
         if (review) {
             setReviewForm({
                 review: review.review || '',
@@ -29,7 +31,6 @@ function UpdateReview({ onClose }) {
         }
     }, [review]);  // Trigger when the review data changes
     
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setReviewForm((prev) => ({
@@ -38,21 +39,18 @@ function UpdateReview({ onClose }) {
         }));
     };
 
-    
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             // Dispatch the review update action
-            await dispatch(editReviews(reviewId, reviewForm));  // Pass spotId here
+            await dispatch(editReviews(reviewId, reviewForm));  // Pass reviewId and reviewForm
 
             setSuccess("Review updated successfully!");
 
-            // Clear success message after a short period
             setTimeout(() => {
                 setSuccess(null);
                 onClose();  // Close the modal after submission
-                navigate(`/spots/${review.spotId}`);  // Redirect to the spot's detail page
-
+                navigate(`/spots/${spotId}`);  // Redirect to the spot's detail page
             }, 2000);
         } catch (err) {
             setError("Failed to update review.");
@@ -90,12 +88,11 @@ function UpdateReview({ onClose }) {
                     </select>
                 </div>
                 <button
-    type="submit"
-    disabled={reviewForm.review.length < 10 || !reviewForm.star}
->
-    Submit Your Review
-</button>
-
+                    type="submit"
+                    disabled={reviewForm.review.length < 10 || !reviewForm.star}
+                >
+                    Submit Your Review
+                </button>
             </form>
             <button className="Close" onClick={onClose}>Close</button>
         </div>
@@ -103,4 +100,5 @@ function UpdateReview({ onClose }) {
 }
 
 export default UpdateReview;
+
 

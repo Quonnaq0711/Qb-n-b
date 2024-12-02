@@ -5,7 +5,7 @@ import { deleteReview, loadReviews } from '../../store/review';
 import ReviewModal from '../ReviewModal/ReviewModal';
 import { useParams } from 'react-router-dom';
 import DeleteReview from '../ManageSpot/DeleteReview';
-import UpdateReview from '../ReviewModal/UpdateReview';
+// import UpdateReview from '../ReviewModal/UpdateReview';
 import './IndividualSpot.css';
 
 function IndividualSpot() {
@@ -53,12 +53,12 @@ function IndividualSpot() {
   //   setModalContent(null);  // Close modal after submitting the update
   // };
 
-  const openUpdateReviewModal = (reviewId) => {
-    setModalContent(<UpdateReview 
-      reviewId={reviewId} 
-      onClose={() => setModalContent(null)}  // Close modal when the update is done
-    />);
-  };
+  // const openUpdateReviewModal = (reviewId) => {
+  //   setModalContent(<UpdateReview 
+  //     reviewId={reviewId} 
+  //     onClose={() => setModalContent(null)}  // Close modal when the update is done
+  //   />);
+  // };
 
   const openDeleteModal = (reviewId) => {
     setModalContent(<DeleteReview
@@ -156,7 +156,7 @@ function IndividualSpot() {
                   {currentUser && !isOwner && review.userId === currentUser.id && (
                     <>
                       <button onClick={() => openDeleteModal(review.id)} className="reviewDelete-button">Delete</button>
-                      <button onClick={() => openUpdateReviewModal(review.id)} className="updateReview-button">Update</button>
+                      {/* <button onClick={() => openUpdateReviewModal(review.id)} className="updateReview-button">Update</button> */}
                     </>
                   )}
                 </div>

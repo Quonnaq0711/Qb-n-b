@@ -78,11 +78,11 @@ export const updateDetails = (spotId, updatedSpot) => async (dispatch) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(updatedSpot), // Send updated data to backend
+    body: JSON.stringify(updatedSpot), 
   });
   if (response.ok) {
     const data = await response.json();
-    dispatch(updateSpot(data)); // Dispatch the updated spot after successful response
+    dispatch(updateSpot(data)); 
   }
 };
 
@@ -97,31 +97,29 @@ export const newSpot = (createSpot) => async (dispatch) => {
   if (response.ok) {
     const createSpot = await response.json();
     dispatch(addSpot(createSpot));
-    return createSpot;  // Return new spot to handle navigation or other actions in component
+    return createSpot;  
   
   } console.log('ACTION', createSpot)
 };
 
-export const addSpotImage = (spotId, addAImage) => async (dispatch) => {
+export const addSpotImage = (spotId, imageUrl, preview = false) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ url: addAImage }),  // Make sure the URL is wrapped inside an object
+    body: JSON.stringify({ url: imageUrl, preview }), 
   });
 
   if (response.ok) {
     const previewImage = await response.json();
-    dispatch(addImage(spotId, previewImage.url));  // Assuming the image response includes the URL
+    dispatch(addImage(spotId, previewImage.url)); 
     return previewImage;
   } else {
     const errors = await response.json();
-    return errors;  // Return error data for handling in the UI
+    return errors; 
   }
 };
-
-
 
 // Initial State
 const initialState = { spots: [], details: null };
@@ -168,11 +166,12 @@ const spotsReducer = (state = initialState, action) => {
       return {
         ...state,
         spots: state.spots.map(spot =>
-          spot.id === action.spotId
-            ? { ...spot, url: [...spot.url, action.url] }
-            : spot
+          spot.id === action.spotId ? { 
+                ...spot, 
+                url: Array.isArray(spot.url) ? [...spot.url, action.url] : [spot.url, action.url] } : spot
         ),
       };
+    
     default:
       return state;
   }

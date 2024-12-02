@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <DeleteModal />
       },
       {
-        path:'/reviews/:reviewId',
+        path:'/reviews/:reviewId/edit',
         element: <UpdateReview />
       },
       {

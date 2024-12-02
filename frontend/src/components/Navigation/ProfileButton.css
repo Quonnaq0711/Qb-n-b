@@ -4,6 +4,11 @@
     position: relative;
     
   }
+
+  .userId {
+    display: flex;
+    flex-direction: column;
+  }
   
   .user-menu-button {
     background: none;
@@ -14,9 +19,13 @@
   }
   
   .profile-dropdown {
+    display: flex;
+    flex-direction: column;
     position: absolute;
     top: 100%;
-    right: 0;     
+    right: 0; 
+    height: 250px;  
+    width: 275px;  
     background-color: #153243;
     border-radius: 4px;
     box-shadow: 0 4px 10px  #4b0082;
@@ -27,19 +36,16 @@
   
   .profile-dropdown li {
     flex-direction: column;
-    margin: 5px 0;
+    margin: 15px ;
     color: #eef0eb; 
-    font-size: x-large;
-    justify-items: space-around;
+    font-size: large;
+    justify-items: space-evenly;
   }
   
-  .logout-button {
-    
-    color: white;
-    border: none;
-    border-radius: 4px;
+  .logout-button {    
+    color: white;    
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 10px 15px;
     transition: background-color 0.3s;
   }
   
@@ -49,8 +55,4 @@
   
   .hidden {
     display: none;
-  }
-   
-  /* .ulClassName {
-    flex-direction: row;
-  } */
+  }  

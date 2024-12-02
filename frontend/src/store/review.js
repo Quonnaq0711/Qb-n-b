@@ -74,7 +74,7 @@ export const createReview = (spotId, reviewData) => async (dispatch) => {
 
 
 export const deleteReview = (reviewId, spotId) => async (dispatch) => {
-  const response = await csrfFetch(`api/reviews/${reviewId}`, {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
       method: 'DELETE',
   });
 
@@ -89,7 +89,7 @@ export const deleteReview = (reviewId, spotId) => async (dispatch) => {
 };
 
 export const editReviews = (reviewId, updatedReview) => async (dispatch) => {
-  const response = await csrfFetch(`/reviews/${reviewId}`, {
+  const response = await csrfFetch(`/reviews/${reviewId}`, {  // Use the reviewId here
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -99,13 +99,17 @@ export const editReviews = (reviewId, updatedReview) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(updatedReviews(data.Reviews))
+    dispatch(updatedReviews(data));  // Use the updated data
+    return data;  // Optionally return the updated review
   } else {
     const error = await response.json();
     dispatch(reviewPostErr(error));
     throw error;
   }
 };
+
+
+
 
 
 
@@ -131,13 +135,12 @@ const reviewsReducer = (state = initialState, action) => {
       case REVIEW_POST_ERR:
           return { ...state, error: action.payload };
           case UPDATE_REVIEW:
-  return {
-    ...state,
-    reviews: state.reviews.map((review) =>
-      review.id === action.payload.id ? action.payload : review
-    ),
-  };
-
+            return {
+              ...state,
+              reviews: state.reviews.map((review) =>
+                review.id === action.payload.id ? action.payload : review
+              ),
+            };
       default:
           return state;
   }

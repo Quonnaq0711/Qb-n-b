@@ -1,15 +1,14 @@
 .createspot {
-  /* position: relative; */
-  top: 20px;
+  position: absolute;
+  top: 150px;
   left: 150px;
   width: 55%;   
   padding: 10px;
-  background-color: #b4b8ab; 
+  background-color: transparent; 
   border-radius: 10px;
   box-shadow: 0 4px 10px #4b0082;  
   border: 1px solid  #4b0082;
   border-radius: 8px;
-
   cursor: pointer;
   transition: transform 0.5s;
   }
