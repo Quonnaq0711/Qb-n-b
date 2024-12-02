@@ -35,7 +35,17 @@ module.exports = {
       spotId: 3,
       url: "https://images.pexels.com/photos/7746560/pexels-photo-7746560.jpeg?auto=compress&cs=tinysrgb&w=800",
       preview: true
-    }
+      },
+      {
+        spotId: 4,
+        url: "https://images.pexels.com/photos/2980955/pexels-photo-2980955.jpeg?auto=compress&cs=tinysrgb&w=600",
+        preview: true
+      },
+      {
+        spotId: 5,
+        url: "https://images.pexels.com/photos/208321/pexels-photo-208321.jpeg?auto=compress&cs=tinysrgb&w=400",
+        preview: true
+      }
     ], options)
   },
 

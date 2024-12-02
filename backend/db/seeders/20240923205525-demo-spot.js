@@ -50,7 +50,27 @@ module.exports = {
         name: "Mountain Cabin",
         description: "Beautiful view of river",
         price: 345,
-        },
+     },
+     {
+      ownerId: 1,
+      address: "54321 YouHitACurb Avenue",
+      city: "Diego Park",
+      state: "Maryland",
+      country: "United States of America",
+      name: "Seaside Excape",
+      description: "Beautiful view of The perfect retreat, where the sound of the waves and the salty ocean breeze create an idyllic atmosphere for relaxation and adventure.",
+      price: 210,
+     },
+     {
+      ownerId: 1,
+      address: "9458 yukurt Road",
+      city: "Osaska",
+      state: "Osaska",
+      country: "Japan",
+      name: "Japanese Getaway",
+      description: "Beautiful view of The perfect retreat, nestled in the midddle of a small town, surrounded by locals ",
+      price: 425,
+      },
    ], options);
   },
 
