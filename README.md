@@ -1,12 +1,6 @@
-# Mod-5-Project -Qb-n-b
+# Mod-5-Project (Qb-n-b)
 
 # Full Stack React, Redux, Express, SQLite3/PostgresQL App
-
-## Frontend Design
-
-![frontend-design]
-
-[frontend-design]:../../frontend/src/Assets/Screenshot%20(99).png 
 
 ## Introduction
 
@@ -16,6 +10,10 @@ This is a full-stack solo project built using React, Redux, Express, and SQLite3
 2. **Reviews**: Users can create, read, and delete reviews for spots.
 
 The front-end is built with React, Redux (with normalized data), and CSS, while the back-end is powered by Express and SQLite3/PostgreSQL for data storage.
+
+## Frontend Design
+
+![frontend-design](assets/Screenshot (99).png)
 
 ---
 
@@ -74,7 +72,7 @@ npm install
 ## 3. Install Frontend Dependencies 
 
 ```bash
-cd ../fronend
+cd ../frontend
 npm install
 ```
 ## 4. Run Backend Server
