@@ -62,7 +62,7 @@ function CreateASpot() {
     if (!form.state) newErrors.state = "State is required";
     if (!form.country) newErrors.country = "Country is required";
     if (!form.price) newErrors.price = "Price per night is required";
-    if (form.description.length < 30 || form.description.length > 60) newErrors.description = "Description needs 30 or more characters";
+    if (form.description.length < 30 ) newErrors.description = "Description needs 30 or more characters";
     if (!form.previewImageUrl) newErrors.previewImageUrl = "Preview Image URL is required and must be a valid image URL";
 
     // Validate additional image URLs
