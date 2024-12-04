@@ -15,6 +15,7 @@ The front-end is built with React, Redux (with normalized data), and CSS, while 
 
 ![frontend-design](Assets/Screenshot99.png)
 
+![frontend-Design](Assets/Screenshot100.png)
 
 ---
 
