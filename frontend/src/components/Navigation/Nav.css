@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color:  indigo;
+  background-image: linear-gradient(to right, #e26d12, #8c183e);
   padding: 10px 20px;
   color: white;
 }

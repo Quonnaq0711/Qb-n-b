@@ -4,7 +4,8 @@ import ProfileButton from './ProfileButton';
 import OpenModalButton from '../OpenModalButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormPageModal';
-import { FaBars } from 'react-icons/fa';
+import logo from "../../Assets/Design2.png";
+import { FaUserCircle } from 'react-icons/fa';
 import { useState } from 'react';
 import './Nav.css';
 
@@ -20,7 +21,7 @@ return (
     
       <div className="logo">
         <NavLink to="/" aria-label="Home">
-          <img src="./src/Assets/Design2.png" alt="Qb-n-b"/>
+          <img src={logo} alt="Qb-n-b"/>
         </NavLink>
     </div>
     <div>
@@ -44,7 +45,7 @@ return (
             ) : (
               <li className="menu">
                 <button aria-label="Menu" className="menu-button" onClick={toggleDropdown}>
-                  <FaBars />
+                <FaUserCircle />
                 </button>
                 {dropdownOpen && (
                   <ul className="dropdown">
