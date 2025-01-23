@@ -31,9 +31,9 @@ const reviewPostErr = (error) => ({
   payload: error,
 });
 
-const updatedReviews = (review) => ({
+const updatedReviews = (reviewId) => ({
   type: UPDATE_REVIEW,
-  payload: review,
+  payload: reviewId,
 });
 
 

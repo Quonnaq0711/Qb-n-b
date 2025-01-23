@@ -62,16 +62,19 @@
 
 .spot-info {
     flex: 1;
+    flex-direction: column;
     margin-right: 20px;
 }
 
 .host-info {
-    font-weight: bold;
+    font-weight: bold;    
     margin-bottom: 5px;
 }
 
 .description {
-    margin-top: 10px;
+    margin-top: 50px;
+    margin-right: 50px;
+    height: fit-content;
     line-height: 1.5; /* Improved readability */
 }
 
@@ -112,7 +115,7 @@
     padding: 10px 15px;
     font-size: 1em;
     color: #fff;
-    background-color: #3498db; /* Primary button color */
+    background-color: black; /* Primary button color */
     border: none;
     border-radius: 5px;
     cursor: pointer;
