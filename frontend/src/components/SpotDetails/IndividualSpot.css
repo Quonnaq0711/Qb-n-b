@@ -64,6 +64,7 @@
     flex: 1;
     flex-direction: column;
     margin-right: 20px;
+    max-width: 520px;
 }
 
 .host-info {
@@ -72,9 +73,10 @@
 }
 
 .description {
-    margin-top: 50px;
+    /* margin-top: 50px; */
     margin-right: 50px;
     height: fit-content;
+    
     line-height: 1.5; /* Improved readability */
 }
 
