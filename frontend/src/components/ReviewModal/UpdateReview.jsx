@@ -23,10 +23,11 @@ function UpdateReview({ onClose }) {
     }, [dispatch, spotId]);
 
     useEffect(() => {
+        
         if (review) {
             setReviewForm({
-                review: review.review || '',
-                star: review.star || '1',  // Default to 1 if there's no star rating
+                review: review.review.data || '',
+                star: review.star.data || '1',  // Default to 1 if there's no star rating
             });
         }
     }, [review]);  // Trigger when the review data changes
@@ -56,6 +57,8 @@ function UpdateReview({ onClose }) {
             setError("Failed to update review.");
             setTimeout(() => setError(null), 5000);  // Clear error after a while
         }
+        console.log('REVIEW', review);
+        console.log('ID', reviewId);
     };
 
     return (
