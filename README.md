@@ -59,6 +59,9 @@ The front-end is built with React, Redux (with normalized data), and CSS, while 
 ## Qb-n-b Live Link
 [https://qb-n-b.onrender.com]
 
+
+
+
 ## API Documentation
 
 ### USER AUTHENTICATION/AUTHORIZATION
