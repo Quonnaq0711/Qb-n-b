@@ -1,6 +1,6 @@
-# Mod-5-Project (Qb-n-b)
+# Qb-n-b
 
-# Full Stack React, Redux, Express, SQLite3/PostgresQL App
+## Full Stack React, Redux, Express, SQLite3/PostgresQL App
 
 ## Introduction
 
@@ -12,10 +12,7 @@ This is a full-stack solo project built using React, Redux, Express, and SQLite3
 The front-end is built with React, Redux (with normalized data), and CSS, while the back-end is powered by Express and SQLite3/PostgreSQL for data storage.
 
 ## Frontend Design
-
-
-![frontend-design](Assets/Screenshot99.png) 
-
+![frontend-design](Assets/Screenshot99.png)
 ---
 
 ## Technologies Used
@@ -31,7 +28,6 @@ The front-end is built with React, Redux (with normalized data), and CSS, while 
   
 - **Authentication**:
   - Crsf.js : User authentication handling
-
 ---
 
 ## Features
@@ -48,54 +44,6 @@ The front-end is built with React, Redux (with normalized data), and CSS, while 
     - Create, Read, and Delete reviews
 
 ---
-
-## Instructions to Launch Locally
-
-### Prerequisites
-
-- **Node.js**: Make sure you have Node.js installed on your machine. You can download it from [here](https://nodejs.org/).
-- **PostgreSQL or SQLite3**: You will need a PostgreSQL or SQLite3 database set up locally.
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/Quonnaq0711/Mod-5-Project.git
-cd Mod-5-Project
-```
-
-## 2. Install Backend Dependencies
-
-```bash
-cd backend
-npm install
-```
-
-## 3. Install Frontend Dependencies 
-
-```bash
-cd ../frontend
-npm install
-```
-## 4. Run Backend Server
-
-```bash
-cd backend
-npm start
-```
-The backend server will typically run on http://localhost:8000.
-
-## 4. Run Frontend Server
-
-```bash
-cd frontend
-npm run dev
-```
-The frontend server will run on http://localhost:5173.
-
-## 5.  Access the Application
-Once both servers are running, navigate to http://localhost:5173 in your browser to access the app. You can now sign up, log in, and interact with the spots and reviews features.
-
----
 ## Usage
 * Sign Up / Log In: Users can create a new account or log in with existing credentials.
 * Demo User: You can quickly log in with a demo user by clicking the "Demo User Login" button.
@@ -108,9 +56,12 @@ Once both servers are running, navigate to http://localhost:5173 in your browser
 
 [database-schema]: https://appacademy-open-assets.s3.us-west-1.amazonaws.com/Modular-Curriculum/content/week-12/airbnb-db-schema.png
 
+## Qb-n-b Live Link
+[https://qb-n-b.onrender.com]
+
 ## API Documentation
 
-## USER AUTHENTICATION/AUTHORIZATION
+### USER AUTHENTICATION/AUTHORIZATION
 
 ### All endpoints that require authentication
 
